@@ -1,6 +1,5 @@
-// Minimal, reliable setup for GitHub Pages (no build step).
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { buildRoom, cameraSpots } from './room.js';
 
 const canvas = document.getElementById('webgl');
@@ -66,7 +65,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
 });
 renderer.domElement.addEventListener('pointerup', () => { if (!isDragging) goTo(currentSpot + 1); });
 
-// Info cards (optional JSON)
+// Optional: load overlay cards if you have data/profile.json
 (async function loadCards() {
   const box = document.getElementById('info-cards');
   if (!box) return;

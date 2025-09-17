@@ -4,12 +4,20 @@
     <meta charset="utf-8" />
     <title>Cozy Anime Room — Jason Wong</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Warm, cozy, toon-shaded WebGL room for Jason Wong's profile."
-    />
+    <meta name="description"
+      content="Warm, cozy, toon-shaded WebGL room for Jason Wong's profile." />
     <link rel="icon" href="./assets/icons/favicon.ico" />
     <link rel="stylesheet" href="./styles.css" />
+
+    <!-- 🔧 Import map tells the browser what "three" means -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#ui">Skip to info</a>
@@ -26,7 +34,9 @@
           <a href="mailto:you@example.com">Email</a>
         </nav>
       </header>
+
       <div class="cards" id="info-cards"></div>
+
       <div class="controls">
         <button id="nextSpot" aria-label="Go to next viewpoint">Next Spot →</button>
         <span class="hint">Single-click = next spot. Drag to look, scroll to zoom.</span>

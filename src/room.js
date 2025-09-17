@@ -1,7 +1,7 @@
-// Simple cozy room with toon/cel shading — no fragile post-processing.
-// Uses a CORS-safe gradient map hosted on jsDelivr (three.js repo).
+// Simple cozy room with toon/cel shading.
+// Uses CORS-safe gradient map on jsDelivr.
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
 
 export async function makeToon(color = 0xffffff) {
   const loader = new THREE.TextureLoader();
@@ -88,7 +88,7 @@ export async function buildRoom(scene) {
   spot.target = table;
   scene.add(spot);
 
-  // Optional: tiny plinths you can click later
+  // Optional info plinths
   const plinth1 = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.3, 24), darkMat);
   plinth1.position.set(2.4, 0.15, 0.2);
   plinth1.name = 'info:projects';

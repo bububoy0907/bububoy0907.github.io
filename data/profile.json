@@ -1,19 +1,7 @@
 {
-  "name": "Jason Tsz-Yeung Wong",
-  "headline": "Software Developer — Unity/C#, WebAR (8th Wall), React/Node",
-  "oneLiner": "Co-author of PolyU’s AI driving-sim publication (Best Project nominee). Shipped 2,000+ CCU WebAR, built 1:1 HK route & 70+ rule checks, and scaled a Minecraft MMORPG (7,000 regs).",
   "cards": [
-    {
-      "title": "About",
-      "text": "Unity simulation, WebAR, and full-stack web. I value reliability, measured outcomes, and thoughtful docs."
-    },
-    {
-      "title": "Projects",
-      "text": "AI Driving Simulator (Case Study), PolyU Info Day WebAR, PetMatch MVP, WebAR Geofence Demo, Unity Tools."
-    },
-    {
-      "title": "Experience",
-      "text": "GoToSim co-founder (2025–), PolyU contract dev (2024), 3CFORGE intern (2020), WishCraft (2017–2020)."
-    }
+    { "title": "About", "text": "Unity simulation, WebAR, full-stack. I value reliability, metrics, and docs." },
+    { "title": "Projects", "text": "AI Driving Sim (Case Study), PolyU Info Day WebAR, PetMatch MVP, Unity Tools." },
+    { "title": "Experience", "text": "GoToSim (2025–), PolyU (2024), 3CFORGE (2020), WishCraft (2017–2020)." }
   ]
 }

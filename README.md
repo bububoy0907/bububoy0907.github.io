@@ -1,26 +1,14 @@
-# Cozy Room WebGL Profile (No Build)
+# Cozy Anime Room (Three.js, no build)
 
-A minimal, cozy, anime-styled Three.js scene for your GitHub Pages profile:  
-**single-click** moves to the next viewpoint, **drag** to orbit, **scroll** to zoom.
+Works on GitHub Pages without any bundler.  
+Open: https://bububoy0907.github.io
 
-### How to run (GitHub Pages profile)
-1. Create the repo named **bububoy0907.github.io** (you already did 🎉).
-2. Put these files in the repo at the root.
-3. Commit & push to `main`.
-4. Visit `https://bububoy0907.github.io`.
+- Toon shading via `MeshToonMaterial` + gradient map (CORS-safe).
+- Drag to orbit, scroll to zoom, **single-click** to move between viewpoints.
+- Overlay cards from `data/profile.json`.
 
-### Customize
-- Edit `data/profile.json` (cards, text).
-- Tweak room colors / layout in `src/room.js`.
-- Add your textures under `assets/textures/` and wire them into materials.
-- Replace `favicon.ico` under `assets/icons/`.
-
-### Notes
-- Uses **MeshToonMaterial** + **OutlinePass** (from three.js examples) to get anime/cartoon feel—no custom shaders built here.
-- ESM via CDN: no bundler, works directly on GitHub Pages.
-- Accessible: skip-link, focusable button, semantic overlay.
-
-### Next steps (optional)
-- Add **raycasting** to click props (e.g., a plinth) to show specific info sections.
-- Add **ambient SFX** toggle for cozy vibes.
-- Replace primitive furniture with GLB models (import via `GLTFLoader`).
+If you ever get a white screen: open DevTools (F12) → Console.  
+Common issues:
+- Wrong path to `main.js` (must be `./src/main.js`).
+- CDN import blocked / version mismatch → use the pinned URLs in code.
+- Texture CORS errors → we use jsDelivr gradient to avoid this.

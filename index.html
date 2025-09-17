@@ -1,1 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Jason Wong — Cozy Room (WebGL)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Warm, cozy, anime-styled WebGL room for Jason Wong's profile."
+    />
+    <link rel="icon" href="/assets/icons/favicon.ico" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#ui">Skip to info</a>
 
+    <div id="app">
+      <canvas id="webgl"></canvas>
+      <!-- Overlay UI -->
+      <div id="ui" role="region" aria-label="Profile info">
+        <header class="hud">
+          <h1>Jason Tsz-Yeung Wong</h1>
+          <p>Software Developer — Unity/C#, WebAR (8th Wall), React/Node</p>
+          <nav class="hud__links">
+            <a href="https://linkedin.com/in/…" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/…" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="mailto:you@example.com">Email</a>
+          </nav>
+        </header>
+
+        <div class="cards" id="info-cards" aria-live="polite"></div>
+
+        <div class="controls">
+          <button id="nextSpot" aria-label="Go to next spot (single click also works)">
+            Next Spot →
+          </button>
+          <span class="hint">Tip: drag to look around, single-click to move between spots.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three.js + examples via ESM CDN -->
+    <script type="module">
+      import '/src/main.js';
+    </script>
+  </body>
+</html>

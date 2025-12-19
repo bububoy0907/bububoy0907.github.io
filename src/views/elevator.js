@@ -303,12 +303,12 @@ export function mountElevator(container) {
   controls.dampingFactor = 0.05;
 
   // Look toward door center; panel is on right near doors
-  controls.target.set(0, 1.25, 1.05);
+ // controls.target.set(0, 1.25, 1.05);
   // Your camera is BEHIND the target (facing the doors), so theta is near -Math.PI.
   // Clamp around -PI to prevent OrbitControls from snapping outside.
-  const AZ = 0.65;
-  controls.minAzimuthAngle = -Math.PI - AZ;
-  controls.maxAzimuthAngle = -Math.PI + AZ;
+  //const AZ = 0.65;
+ // controls.minAzimuthAngle = -Math.PI - AZ;
+  //controls.maxAzimuthAngle = -Math.PI + AZ;
 
   // Keep pitch reasonable (avoid looking at ceiling/floor too much)
   //controls.minPolarAngle = 1.12;
@@ -318,9 +318,9 @@ export function mountElevator(container) {
   //controls.minDistance = 1.45;
   //controls.maxDistance = 2.35;
   
-  camera.position.set(-0.22, 1.45, -1.18);
-  controls.update();
-  controls.saveState?.();
+  //camera.position.set(-0.22, 1.45, -1.18);
+  //controls.update();
+  //controls.saveState?.();
 
   // Luxury lighting: warm downlights + subtle accent
   const amb = new THREE.AmbientLight(0xfff0d8, 0.28);

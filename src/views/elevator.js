@@ -311,12 +311,12 @@ export function mountElevator(container) {
   controls.maxAzimuthAngle = -Math.PI + AZ;
 
   // Keep pitch reasonable (avoid looking at ceiling/floor too much)
-  controls.minPolarAngle = 1.12;
-  controls.maxPolarAngle = 1.46;
+  //controls.minPolarAngle = 1.12;
+  //controls.maxPolarAngle = 1.46;
 
   // Keep zoom inside the cabin
-  controls.minDistance = 1.45;
-  controls.maxDistance = 2.35;
+  //controls.minDistance = 1.45;
+  //controls.maxDistance = 2.35;
   
   camera.position.set(-0.22, 1.45, -1.18);
   controls.update();

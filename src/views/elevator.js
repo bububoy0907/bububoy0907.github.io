@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { PROFILE, SKILLS, PROJECTS, ELEVATOR_FLOORS } from "../content.js";
+import { PROFILE, SKILLS, PROJECTS } from "../content.js";
 
-/* ------------------ small utilities ------------------ */
+/* ---------------- utils ---------------- */
 
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -21,7 +21,15 @@ function animate({ duration, onUpdate }) {
   });
 }
 
-/* ------------------ portfolio HTML (same as traditional) ------------------ */
+/* ---------------- content (must match Traditional) ---------------- */
+
+const FLOORS = [
+  { floor: 1, key: "about", label: "About" },
+  { floor: 2, key: "projects", label: "Projects" },
+  { floor: 3, key: "skills", label: "Skills" },
+  { floor: 4, key: "demos", label: "Demos" },
+  { floor: 5, key: "contact", label: "Contact" }
+];
 
 function aboutHtml() {
   return `
@@ -104,7 +112,7 @@ function projectsHtml() {
   return `<p class="mini">Featured projects (same content as Traditional view).</p><hr class="smallHr" />${cards}`;
 }
 
-/* ------------------ canvas texture helpers (luxury UI) ------------------ */
+/* ---------------- canvas textures: luxury tiles + indicator ---------------- */
 
 function roundRect(ctx, x, y, w, h, r) {
   const rr = Math.min(r, w / 2, h / 2);
@@ -117,57 +125,53 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-function makeLabelTileTexture({ floor, label, active = false }) {
+function makeRowTileTexture({ floor, label, active }) {
   const canvas = document.createElement("canvas");
   canvas.width = 512;
   canvas.height = 128;
   const ctx = canvas.getContext("2d");
 
-  // Background “panel glass”
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Outer rounded tile
-  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  // tile background
+  const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
   if (active) {
-    grad.addColorStop(0, "rgba(124,92,255,0.40)");
-    grad.addColorStop(1, "rgba(0,212,255,0.18)");
+    bg.addColorStop(0, "rgba(255,210,150,0.34)");
+    bg.addColorStop(1, "rgba(0,150,255,0.16)");
   } else {
-    grad.addColorStop(0, "rgba(20,22,30,0.85)");
-    grad.addColorStop(1, "rgba(10,12,16,0.85)");
+    bg.addColorStop(0, "rgba(18,20,26,0.92)");
+    bg.addColorStop(1, "rgba(10,12,16,0.92)");
   }
 
-  roundRect(ctx, 10, 14, 492, 100, 26);
-  ctx.fillStyle = grad;
+  roundRect(ctx, 12, 16, 488, 96, 26);
+  ctx.fillStyle = bg;
   ctx.fill();
 
-  // Subtle border (gold-ish for luxury)
+  // border (brass tone)
   ctx.lineWidth = 3;
-  ctx.strokeStyle = active ? "rgba(255,255,255,0.28)" : "rgba(176,141,87,0.35)";
+  ctx.strokeStyle = active ? "rgba(255,255,255,0.30)" : "rgba(176,141,87,0.40)";
   ctx.stroke();
 
-  // Inner highlight
+  // inner highlight
   roundRect(ctx, 18, 22, 476, 84, 22);
   ctx.lineWidth = 2;
   ctx.strokeStyle = "rgba(255,255,255,0.08)";
   ctx.stroke();
 
-  // Text
-  const f = String(floor).padStart(2, "0");
+  const num = String(floor).padStart(2, "0");
   const title = (label || "").toUpperCase();
 
-  ctx.fillStyle = "rgba(255,255,255,0.92)";
-  ctx.font = "bold 38px ui-monospace, Menlo, Consolas, monospace";
   ctx.textBaseline = "middle";
-  ctx.fillText(f, 36, 64);
+  ctx.fillStyle = "rgba(255,255,255,0.92)";
+  ctx.font = "bold 40px ui-monospace, Menlo, Consolas, monospace";
+  ctx.fillText(num, 34, 64);
 
   ctx.fillStyle = "rgba(255,255,255,0.86)";
   ctx.font = "bold 28px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-  ctx.fillText(title, 120, 64);
+  ctx.fillText(title, 118, 64);
 
-  // Small “LED” dot
+  // small LED dot
   ctx.beginPath();
-  ctx.arc(468, 64, 8, 0, Math.PI * 2);
-  ctx.fillStyle = active ? "rgba(0,212,255,0.9)" : "rgba(255,255,255,0.18)";
+  ctx.arc(474, 64, 8, 0, Math.PI * 2);
+  ctx.fillStyle = active ? "rgba(0,210,255,0.90)" : "rgba(255,255,255,0.16)";
   ctx.fill();
 
   const tex = new THREE.CanvasTexture(canvas);
@@ -182,26 +186,24 @@ function makeIndicatorTexture({ floor = 1, dir = 0 }) {
   canvas.height = 128;
   const ctx = canvas.getContext("2d");
 
-  // Background
   roundRect(ctx, 10, 12, 236, 104, 18);
   ctx.fillStyle = "rgba(0,0,0,0.85)";
   ctx.fill();
 
-  // Border
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "rgba(176,141,87,0.45)";
+  ctx.strokeStyle = "rgba(176,141,87,0.55)";
   ctx.stroke();
 
-  // Text
-  ctx.fillStyle = "rgba(255,255,255,0.92)";
-  ctx.font = "bold 46px ui-monospace, Menlo, Consolas, monospace";
-  ctx.textBaseline = "middle";
-  ctx.fillText(String(floor).padStart(2, "0"), 24, 64);
+  const num = String(floor).padStart(2, "0");
+  const arrow = dir === 1 ? "▲" : dir === -1 ? "▼" : " ";
 
-  // Direction arrow
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "rgba(255,255,255,0.92)";
+  ctx.font = "bold 50px ui-monospace, Menlo, Consolas, monospace";
+  ctx.fillText(num, 24, 64);
+
   ctx.fillStyle = "rgba(255,255,255,0.80)";
   ctx.font = "bold 44px ui-monospace, Menlo, Consolas, monospace";
-  const arrow = dir === 1 ? "▲" : dir === -1 ? "▼" : " ";
   ctx.fillText(arrow, 178, 64);
 
   const tex = new THREE.CanvasTexture(canvas);
@@ -210,9 +212,10 @@ function makeIndicatorTexture({ floor = 1, dir = 0 }) {
   return tex;
 }
 
-/* ------------------ main mount ------------------ */
+/* ---------------- main mount ---------------- */
 
 export function mountElevator(container) {
+  // DOM
   const wrap = document.createElement("div");
   wrap.className = "container";
 
@@ -221,19 +224,20 @@ export function mountElevator(container) {
   header.innerHTML = `
     <h1 class="h1">Interactive Elevator</h1>
     <p class="sub">
-      Click a floor row on the hotel-style panel (next to the doors). The elevator simulates travel, opens the doors, and shows the section inside an in-view display panel.
+      Click a floor row on the panel next to the doors. The elevator simulates travel, opens the doors, and shows the section below.
     </p>
   `;
   wrap.appendChild(header);
 
   const stage = document.createElement("section");
   stage.className = "roomWrap";
+  stage.style.position = "relative";
   stage.innerHTML = `
     <div class="hint">
       <strong>How to interact</strong>
       <ul>
-        <li>Click a floor row on the panel near the doors</li>
-        <li>Doors open and the content appears below</li>
+        <li>Click a floor row on the panel</li>
+        <li>Doors open; section appears in the in-view display</li>
       </ul>
     </div>
 
@@ -256,7 +260,6 @@ export function mountElevator(container) {
   wrap.appendChild(stage);
   container.appendChild(wrap);
 
-  // Drawer logic (in-view, not a popup)
   const drawer = stage.querySelector("#infoDrawer");
   const infoTitle = stage.querySelector("#infoTitle");
   const infoDesc = stage.querySelector("#infoDesc");
@@ -268,267 +271,238 @@ export function mountElevator(container) {
     infoBody.innerHTML = html || "";
     drawer.classList.add("open");
   };
+
   const closeDrawer = () => {
     drawer.classList.remove("open");
     infoBody.innerHTML = "";
   };
 
-  stage.querySelector("#infoClose").addEventListener("click", closeDrawer);
-  stage.querySelector("#closeBtn").addEventListener("click", closeDrawer);
-
-  // Renderer
+  // renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(stage.clientWidth, stage.clientHeight);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  // luxury-ish tone mapping
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.08;
+
   stage.appendChild(renderer.domElement);
 
-  // Scene
+  // scene
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    50,
-    stage.clientWidth / stage.clientHeight,
-    0.1,
-    100
-  );
-  camera.position.set(0, 1.45, 2.6);
+  scene.background = new THREE.Color(0x07090d);
 
+  // camera: guaranteed INSIDE, facing doors & panel
+  const camera = new THREE.PerspectiveCamera(52, stage.clientWidth / stage.clientHeight, 0.1, 100);
+
+  // Elevator dimensions
+  const W = 3.0;
+  const D = 3.2;
+  const H = 2.7;
+  const halfW = W / 2;
+  const halfD = D / 2;
+
+  const frontZ = halfD;
+
+  // Doors opening
+  const openingW = 1.75;
+  const openingH = 2.25;
+  const sideFrameW = (W - openingW) / 2;
+
+  // Place camera behind target: theta ~ -PI (important for OrbitControls clamping)
+  const target = new THREE.Vector3(0.15, 1.25, frontZ - 0.25);
+  camera.position.set(-0.35, 1.48, -halfD + 0.55);
+
+  // controls
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enablePan = false;
   controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
-  controls.minDistance = 1.8;
-  controls.maxDistance = 3.8;
-  controls.target.set(0, 1.25, 0);
+  controls.dampingFactor = 0.06;
+  controls.target.copy(target);
 
-  // Luxury lighting: warm downlights + subtle accent
-  const amb = new THREE.AmbientLight(0xfff0d8, 0.28);
-  scene.add(amb);
+  // Critical: clamp azimuth around -PI so OrbitControls does NOT snap outside
+  const AZ = 0.65;
+  controls.minAzimuthAngle = -Math.PI - AZ;
+  controls.maxAzimuthAngle = -Math.PI + AZ;
 
-  const key = new THREE.SpotLight(0xffe3c2, 1.3, 12, Math.PI / 4, 0.45, 1.2);
-  key.position.set(0.2, 2.55, -0.2);
-  key.target.position.set(0, 1.0, 0.8);
-  scene.add(key);
-  scene.add(key.target);
+  controls.minPolarAngle = 1.12;
+  controls.maxPolarAngle = 1.46;
 
-  const fill = new THREE.SpotLight(0xffe8cf, 0.85, 10, Math.PI / 4, 0.6, 1.4);
-  fill.position.set(-0.9, 2.45, -0.6);
-  fill.target.position.set(0, 1.0, 1.0);
-  scene.add(fill);
-  scene.add(fill.target);
+  controls.minDistance = 1.55;
+  controls.maxDistance = 2.45;
 
-  const accent = new THREE.PointLight(0xffd39a, 0.55, 8, 2.0);
-  accent.position.set(0.8, 2.1, 0.9);
-  scene.add(accent);
+  // Force OrbitControls to compute internal spherical state from our camera/target
+  controls.update();
 
-  // Materials (luxury look)
-  const woodMat = new THREE.MeshStandardMaterial({
-    color: 0x2a1f16,        // walnut-ish
-    roughness: 0.65,
-    metalness: 0.05
-  });
+  /* ---------------- luxury lighting ---------------- */
 
-  const darkWallMat = new THREE.MeshStandardMaterial({
-    color: 0x111522,
-    roughness: 0.9,
-    metalness: 0.05
-  });
+  // warm ambient
+  scene.add(new THREE.AmbientLight(0xfff0dd, 0.22));
 
-  const brassMat = new THREE.MeshStandardMaterial({
-    color: 0xb08d57,
-    roughness: 0.28,
-    metalness: 1.0
-  });
+  // ceiling downlights
+  const key = new THREE.SpotLight(0xffe3c2, 1.35, 12, Math.PI / 4, 0.55, 1.4);
+  key.position.set(0.2, H + 0.05, -0.2);
+  key.target.position.set(0.0, 1.0, frontZ - 0.6);
+  scene.add(key, key.target);
 
-  const steelDoorMat = new THREE.MeshStandardMaterial({
-    color: 0xb4bcc8, // brushed steel-ish
-    roughness: 0.35,
-    metalness: 1.0
-  });
+  const fill = new THREE.SpotLight(0xffebd2, 0.95, 10, Math.PI / 4, 0.60, 1.5);
+  fill.position.set(-0.9, H, -0.6);
+  fill.target.position.set(0.0, 1.0, frontZ - 0.4);
+  scene.add(fill, fill.target);
 
-  const floorMat = new THREE.MeshStandardMaterial({
-    color: 0x0f1014, // dark carpet
-    roughness: 1.0,
-    metalness: 0.0
-  });
+  const brassAccent = new THREE.PointLight(0xffd2a0, 0.55, 8, 2.0);
+  brassAccent.position.set(0.9, 2.0, frontZ - 0.7);
+  scene.add(brassAccent);
 
-  const panelBodyMat = new THREE.MeshStandardMaterial({
-    color: 0x1a1f2b,
-    roughness: 0.55,
-    metalness: 0.25
-  });
+  /* ---------------- materials: luxury hotel elevator ---------------- */
 
+  const woodMat = new THREE.MeshStandardMaterial({ color: 0x2b2016, roughness: 0.65, metalness: 0.05, side: THREE.DoubleSide });
+  const charcoalMat = new THREE.MeshStandardMaterial({ color: 0x101422, roughness: 0.92, metalness: 0.05, side: THREE.DoubleSide });
+  const brassMat = new THREE.MeshStandardMaterial({ color: 0xb08d57, roughness: 0.28, metalness: 1.0 });
+  const steelMat = new THREE.MeshStandardMaterial({ color: 0xb7c0cb, roughness: 0.35, metalness: 1.0 });
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x0f1014, roughness: 1.0, metalness: 0.0, side: THREE.DoubleSide });
+  const panelBodyMat = new THREE.MeshStandardMaterial({ color: 0x171b24, roughness: 0.55, metalness: 0.28 });
   const emissiveStripMat = new THREE.MeshStandardMaterial({
-    color: 0x10131a,
-    roughness: 0.2,
-    metalness: 0.0,
-    emissive: new THREE.Color(0xffd6a3),
-    emissiveIntensity: 0.55
+    color: 0x0f131a, roughness: 0.2, metalness: 0.0,
+    emissive: new THREE.Color(0xffd6a3), emissiveIntensity: 0.55,
+    side: THREE.DoubleSide
   });
 
-  // Cabin dimensions
-  const W = 3.0;
-  const D = 3.0;
-  const H = 2.6;
-  const halfW = W / 2;
-  const halfD = D / 2;
+  /* ---------------- cabin geometry ---------------- */
 
   const cabin = new THREE.Group();
   scene.add(cabin);
 
-  // Floor
+  // floor
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(W, D), floorMat);
   floor.rotation.x = -Math.PI / 2;
   cabin.add(floor);
 
-  // Ceiling
-  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), darkWallMat);
+  // ceiling
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), charcoalMat);
   ceiling.rotation.x = Math.PI / 2;
   ceiling.position.y = H;
   cabin.add(ceiling);
 
-  // Ceiling light strips (luxury accent)
-  const strip1 = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.06), emissiveStripMat);
+  // ceiling strips
+  const strip1 = new THREE.Mesh(new THREE.PlaneGeometry(2.25, 0.06), emissiveStripMat);
   strip1.rotation.x = Math.PI / 2;
-  strip1.position.set(0, H - 0.01, -0.4);
+  strip1.position.set(0, H - 0.01, -0.35);
   cabin.add(strip1);
 
-  const strip2 = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.06), emissiveStripMat);
+  const strip2 = new THREE.Mesh(new THREE.PlaneGeometry(2.25, 0.06), emissiveStripMat);
   strip2.rotation.x = Math.PI / 2;
-  strip2.position.set(0, H - 0.01, 0.6);
+  strip2.position.set(0, H - 0.01, 0.55);
   cabin.add(strip2);
 
-  // Back wall (wood)
+  // back wall (wood)
   const backWall = new THREE.Mesh(new THREE.PlaneGeometry(W, H), woodMat);
   backWall.position.set(0, H / 2, -halfD);
   cabin.add(backWall);
 
-  // Side walls (dark + trim)
-  const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(D, H), darkWallMat);
+  // side walls (charcoal)
+  const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(D, H), charcoalMat);
   leftWall.rotation.y = Math.PI / 2;
   leftWall.position.set(-halfW, H / 2, 0);
   cabin.add(leftWall);
 
-  const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(D, H), darkWallMat);
+  const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(D, H), charcoalMat);
   rightWall.rotation.y = -Math.PI / 2;
   rightWall.position.set(halfW, H / 2, 0);
   cabin.add(rightWall);
 
-  // Corner trims (brass)
+  // corner trims (brass)
   const cornerTrimGeom = new THREE.BoxGeometry(0.03, H, 0.03);
-  const trimL = new THREE.Mesh(cornerTrimGeom, brassMat);
-  trimL.position.set(-halfW + 0.015, H / 2, -halfD + 0.015);
-  cabin.add(trimL);
+  const trim1 = new THREE.Mesh(cornerTrimGeom, brassMat);
+  trim1.position.set(-halfW + 0.015, H / 2, -halfD + 0.015);
+  cabin.add(trim1);
 
-  const trimR = new THREE.Mesh(cornerTrimGeom, brassMat);
-  trimR.position.set(halfW - 0.015, H / 2, -halfD + 0.015);
-  cabin.add(trimR);
+  const trim2 = new THREE.Mesh(cornerTrimGeom, brassMat);
+  trim2.position.set(halfW - 0.015, H / 2, -halfD + 0.015);
+  cabin.add(trim2);
 
-  /* ------------------ front wall frame + doors ------------------ */
+  /* ---------------- front wall: door frame + panel on SAME FRONT WALL ---------------- */
 
-  const frontZ = halfD;
+  const frameDepth = 0.09;
 
-  const openingW = 1.75;
-  const openingH = 2.25;
-  const frameDepth = 0.08;
-
-  const sideFrameW = (W - openingW) / 2;
-
-  // Frame top
-  const frameTop = new THREE.Mesh(
-    new THREE.BoxGeometry(W, H - openingH, frameDepth),
-    brassMat
-  );
-  frameTop.position.set(0, openingH + (H - openingH) / 2, frontZ - 0.02);
+  // top frame
+  const frameTop = new THREE.Mesh(new THREE.BoxGeometry(W, H - openingH, frameDepth), brassMat);
+  frameTop.position.set(0, openingH + (H - openingH) / 2, frontZ - 0.03);
   cabin.add(frameTop);
 
-  // Frame sides
-  const frameLeft = new THREE.Mesh(
-    new THREE.BoxGeometry(sideFrameW, openingH, frameDepth),
-    brassMat
-  );
-  frameLeft.position.set(-(openingW / 2 + sideFrameW / 2), openingH / 2, frontZ - 0.02);
+  // left frame
+  const frameLeft = new THREE.Mesh(new THREE.BoxGeometry(sideFrameW, openingH, frameDepth), brassMat);
+  frameLeft.position.set(-(openingW / 2 + sideFrameW / 2), openingH / 2, frontZ - 0.03);
   cabin.add(frameLeft);
 
-  const frameRight = new THREE.Mesh(
-    new THREE.BoxGeometry(sideFrameW, openingH, frameDepth),
-    brassMat
-  );
-  frameRight.position.set(openingW / 2 + sideFrameW / 2, openingH / 2, frontZ - 0.02);
+  // right frame (this will hold the panel area; still brass outer trim)
+  const frameRight = new THREE.Mesh(new THREE.BoxGeometry(sideFrameW, openingH, frameDepth), brassMat);
+  frameRight.position.set(openingW / 2 + sideFrameW / 2, openingH / 2, frontZ - 0.03);
   cabin.add(frameRight);
 
-  // Bottom threshold
-  const frameBottom = new THREE.Mesh(
-    new THREE.BoxGeometry(openingW, 0.08, frameDepth),
-    brassMat
-  );
-  frameBottom.position.set(0, 0.04, frontZ - 0.02);
+  // bottom threshold
+  const frameBottom = new THREE.Mesh(new THREE.BoxGeometry(openingW, 0.08, frameDepth), brassMat);
+  frameBottom.position.set(0, 0.04, frontZ - 0.03);
   cabin.add(frameBottom);
 
-  // Door group
+  /* ---------------- doors (thick 3D sliding steel) ---------------- */
+
   const doorGroup = new THREE.Group();
-  doorGroup.position.set(0, 0, frontZ - 0.03);
+  doorGroup.position.set(0, 0, frontZ - 0.05);
   cabin.add(doorGroup);
 
   const doorPanelW = openingW / 2;
   const doorPanelH = openingH;
 
-  const doorGeom = new THREE.BoxGeometry(doorPanelW, doorPanelH, 0.11);
+  const doorGeom = new THREE.BoxGeometry(doorPanelW, doorPanelH, 0.12);
 
-  const doorLeft = new THREE.Mesh(doorGeom, steelDoorMat);
-  doorLeft.name = "DoorLeft";
+  const doorLeft = new THREE.Mesh(doorGeom, steelMat);
   doorLeft.position.set(-doorPanelW / 2, doorPanelH / 2, 0);
   doorGroup.add(doorLeft);
 
-  const doorRight = new THREE.Mesh(doorGeom, steelDoorMat);
-  doorRight.name = "DoorRight";
+  const doorRight = new THREE.Mesh(doorGeom, steelMat);
   doorRight.position.set(doorPanelW / 2, doorPanelH / 2, 0);
   doorGroup.add(doorRight);
 
-  // Door seam
-  const seam = new THREE.Mesh(
-    new THREE.BoxGeometry(0.02, doorPanelH * 0.92, 0.03),
-    brassMat
-  );
-  seam.position.set(0, doorPanelH / 2, 0.07);
+  // seam + handles (brass)
+  const seam = new THREE.Mesh(new THREE.BoxGeometry(0.02, doorPanelH * 0.92, 0.03), brassMat);
+  seam.position.set(0, doorPanelH / 2, 0.08);
   doorGroup.add(seam);
 
-  // Door handles (brass)
   const handleGeom = new THREE.BoxGeometry(0.08, 0.65, 0.03);
   const handleL = new THREE.Mesh(handleGeom, brassMat);
-  handleL.position.set(-0.28, 1.22, 0.07);
+  handleL.position.set(-0.28, 1.22, 0.08);
   doorGroup.add(handleL);
 
   const handleR = new THREE.Mesh(handleGeom, brassMat);
-  handleR.position.set(0.28, 1.22, 0.07);
+  handleR.position.set(0.28, 1.22, 0.08);
   doorGroup.add(handleR);
 
-  /* ------------------ door reveal (hallway) ------------------ */
+  /* ---------------- door reveal hallway (fade plane + light) ---------------- */
 
   const hallway = new THREE.Group();
   hallway.visible = false;
   cabin.add(hallway);
 
-  const hallPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(openingW + 0.9, openingH + 0.25),
-    new THREE.MeshBasicMaterial({ color: 0x0b2036, transparent: true, opacity: 0 })
-  );
-  hallPlane.position.set(0, openingH / 2, frontZ + 0.45);
+  const hallPlaneMat = new THREE.MeshBasicMaterial({ color: 0x0b2036, transparent: true, opacity: 0.0, side: THREE.DoubleSide });
+  const hallPlane = new THREE.Mesh(new THREE.PlaneGeometry(openingW + 0.95, openingH + 0.25), hallPlaneMat);
+  hallPlane.position.set(0, openingH / 2, frontZ + 0.55);
   hallway.add(hallPlane);
 
-  const hallLight = new THREE.PointLight(0xaad7ff, 0, 7.5, 2.0);
-  hallLight.position.set(0.0, 1.8, frontZ + 0.85);
+  const hallLight = new THREE.PointLight(0xaad7ff, 0.0, 8.0, 2.0);
+  hallLight.position.set(0.0, 1.8, frontZ + 0.95);
   hallway.add(hallLight);
 
   async function setHallway(open) {
     if (open) {
       hallway.visible = true;
       await animate({
-        duration: 280,
+        duration: 260,
         onUpdate: (t) => {
           const k = easeInOutCubic(t);
           hallPlane.material.opacity = 0.62 * k;
-          hallLight.intensity = 1.4 * k;
+          hallLight.intensity = 1.5 * k;
         }
       });
     } else {
@@ -537,137 +511,106 @@ export function mountElevator(container) {
         onUpdate: (t) => {
           const k = 1 - easeInOutCubic(t);
           hallPlane.material.opacity = 0.62 * k;
-          hallLight.intensity = 1.4 * k;
+          hallLight.intensity = 1.5 * k;
         }
       });
       hallway.visible = false;
     }
   }
 
-  /* ------------------ LUXURY PANEL: same side as door (right wall, near doors) ------------------ */
+  /* ---------------- panel: on FRONT WALL, right of doors, with rounded-rect row labels ---------------- */
 
-  // This is “real elevator” placement:
-  // - Mounted to RIGHT WALL
-  // - Close to the DOOR (front area)
-  // - Slight inward angle for visibility
+  // place panel centered within the right-frame area, flush to front wall
   const panelGroup = new THREE.Group();
-
-  // position near front-right corner, slightly before door line
-  panelGroup.position.set(halfW - 0.02, 1.30, frontZ - 0.72);
-
-  // rotate so its face points into the cabin (toward -X) and slightly toward the camera
-  panelGroup.rotation.y = -Math.PI / 2 + 0.12;
-
+  const panelX = openingW / 2 + sideFrameW / 2;
+  panelGroup.position.set(panelX, 1.18, frontZ - 0.11);
+  panelGroup.rotation.y = 0; // same plane as door wall
   cabin.add(panelGroup);
 
-  // Panel body (bigger, hotel-like)
-  const panelW = 0.75;
-  const panelH = 1.85;
-  const panelT = 0.09;
+  const panelW = sideFrameW * 0.78;
+  const panelH = 2.05;
+  const panelT = 0.10;
 
-  const panelBody = new THREE.Mesh(
-    new THREE.BoxGeometry(panelW, panelH, panelT),
-    panelBodyMat
-  );
+  const panelBody = new THREE.Mesh(new THREE.BoxGeometry(panelW, panelH, panelT), panelBodyMat);
   panelGroup.add(panelBody);
 
-  // Panel brass bezel (frame)
-  const bezel = new THREE.Mesh(
-    new THREE.BoxGeometry(panelW + 0.02, panelH + 0.02, 0.02),
-    brassMat
-  );
+  // brass bezel (thin frame)
+  const bezel = new THREE.Mesh(new THREE.BoxGeometry(panelW + 0.03, panelH + 0.03, 0.02), brassMat);
   bezel.position.z = panelT / 2 + 0.02;
   panelGroup.add(bezel);
 
-  // Indicator mesh (3D, no DOM overlay)
-  const indicatorTex = makeIndicatorTexture({ floor: 1, dir: 0 });
-  const disposableTextures = [indicatorTex];
+  // indicator (3D plane on panel)
+  const disposableTextures = [];
+  let indicatorTex = makeIndicatorTexture({ floor: 1, dir: 0 });
+  disposableTextures.push(indicatorTex);
 
-  const indicatorMat = new THREE.MeshBasicMaterial({ map: indicatorTex });
-  const indicatorMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.46, 0.23),
-    indicatorMat
-  );
+  const indicatorMat = new THREE.MeshBasicMaterial({ map: indicatorTex, transparent: true });
+  const indicatorMesh = new THREE.Mesh(new THREE.PlaneGeometry(panelW * 0.78, 0.22), indicatorMat);
   indicatorMesh.position.set(0, panelH / 2 - 0.22, panelT / 2 + 0.035);
   panelGroup.add(indicatorMesh);
 
-  function updateIndicator({ floor, dir }) {
-    const old = indicatorTex;
+  function updateIndicator(floor, dir) {
     const next = makeIndicatorTexture({ floor, dir });
     disposableTextures.push(next);
     indicatorMesh.material.map = next;
     indicatorMesh.material.needsUpdate = true;
-    // note: old disposed in cleanup
   }
 
-  // Floor rows: rounded rectangle tile with text + push button
+  // row tiles (rounded rectangle labels) + hit targets
+  const rowTiles = new Map(); // floor -> tile mesh
   const clickTargets = [];
-  const tileMeshes = new Map(); // floor -> tile mesh (for active highlight)
 
-  const buttonGeom = new THREE.CylinderGeometry(0.055, 0.055, 0.03, 20);
+  const rowTileGeom = new THREE.PlaneGeometry(panelW * 0.86, 0.14);
+  const hitGeom = new THREE.PlaneGeometry(panelW * 0.92, 0.16);
 
-  const buttonMat = new THREE.MeshStandardMaterial({
-    color: 0x3a4562,
-    roughness: 0.5,
-    metalness: 0.25
-  });
-
+  const buttonGeom = new THREE.CylinderGeometry(0.05, 0.05, 0.028, 20);
+  const buttonMat = new THREE.MeshStandardMaterial({ color: 0x3a4562, roughness: 0.5, metalness: 0.25 });
   const buttonActiveMat = new THREE.MeshStandardMaterial({
-    color: 0x7c5cff,
-    roughness: 0.45,
-    metalness: 0.2,
-    emissive: new THREE.Color(0x7c5cff),
-    emissiveIntensity: 0.35
+    color: 0x7c5cff, roughness: 0.45, metalness: 0.2,
+    emissive: new THREE.Color(0x7c5cff), emissiveIntensity: 0.35
   });
 
-  // layout in panel local coords
-  const rowsTopY = panelH / 2 - 0.55; // below indicator
-  const rowGap = 0.22;
+  const topY = panelH / 2 - 0.55;
+  const gapY = 0.22;
 
-  ELEVATOR_FLOORS.forEach((f, i) => {
-    const y = rowsTopY - i * rowGap;
+  FLOORS.forEach((f, i) => {
+    const y = topY - i * gapY;
 
-    // Tile texture
-    const tex = makeLabelTileTexture({ floor: f.floor, label: f.label, active: false });
+    const tex = makeRowTileTexture({ floor: f.floor, label: f.label, active: f.floor === 1 });
     disposableTextures.push(tex);
 
     const tileMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
-    const tile = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.14), tileMat);
-    tile.position.set(-0.02, y, panelT / 2 + 0.035);
+    const tile = new THREE.Mesh(rowTileGeom, tileMat);
+    tile.position.set(0, y, panelT / 2 + 0.035);
     panelGroup.add(tile);
-    tileMeshes.set(f.floor, tile);
+    rowTiles.set(f.floor, tile);
 
-    // 3D push button (to the right of the tile)
+    // push button to the right edge of each row (optional realism)
     const btn = new THREE.Mesh(buttonGeom, buttonMat.clone());
     btn.rotation.x = Math.PI / 2;
-    btn.position.set(0.29, y, panelT / 2 + 0.06);
+    btn.position.set(panelW * 0.39, y, panelT / 2 + 0.055);
     panelGroup.add(btn);
 
-    // Large hit area (clicking the row feels easy)
-    const hit = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.70, 0.16),
-      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
-    );
-    hit.position.set(0.02, y, panelT / 2 + 0.07);
-    hit.userData = { floor: f.floor, key: f.key, btnMesh: btn };
+    // large invisible hit target for the whole row
+    const hit = new THREE.Mesh(hitGeom, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 }));
+    hit.position.set(0, y, panelT / 2 + 0.065);
+    hit.userData = { floor: f.floor, key: f.key, btn };
     panelGroup.add(hit);
-
     clickTargets.push(hit);
   });
 
-  function setTileActive(floor, active) {
-    const tile = tileMeshes.get(floor);
-    if (!tile) return;
-    const f = ELEVATOR_FLOORS.find(x => x.floor === floor);
-    if (!f) return;
-
-    const next = makeLabelTileTexture({ floor: f.floor, label: f.label, active });
-    disposableTextures.push(next);
-    tile.material.map = next;
-    tile.material.needsUpdate = true;
+  function setRowActive(activeFloor) {
+    FLOORS.forEach((f) => {
+      const tile = rowTiles.get(f.floor);
+      if (!tile) return;
+      const next = makeRowTileTexture({ floor: f.floor, label: f.label, active: f.floor === activeFloor });
+      disposableTextures.push(next);
+      tile.material.map = next;
+      tile.material.needsUpdate = true;
+    });
   }
 
-  /* ------------------ state + animations ------------------ */
+  /* ---------------- interaction + animation state ---------------- */
 
   let currentFloor = 1;
   let busy = false;
@@ -693,45 +636,20 @@ export function mountElevator(container) {
     await setHallway(open);
   }
 
-  function openSection(key) {
-    if (key === "about") {
-      openDrawer({ title: "About", desc: "Personal information", html: aboutHtml() });
-      return;
-    }
-    if (key === "projects") {
-      openDrawer({ title: "Projects", desc: "Featured projects", html: projectsHtml() });
-      return;
-    }
-    if (key === "skills") {
-      openDrawer({ title: "Skills", desc: "Tech stack", html: skillsHtml() });
-      return;
-    }
-    if (key === "demos") {
-      openDrawer({ title: "Demos", desc: "Proof of work / placeholders", html: demosHtml() });
-      return;
-    }
-    if (key === "contact") {
-      openDrawer({ title: "Contact", desc: "Reach me", html: contactHtml() });
-      return;
-    }
-    openDrawer({ title: "Section", desc: "Not wired yet", html: `<p class="mini">Unknown key: ${key}</p>` });
-  }
-
   async function simulateTravel(targetFloor) {
     const delta = Math.abs(targetFloor - currentFloor);
     const duration = 850 + delta * 420;
 
     let displayed = currentFloor;
-    const direction = targetFloor > currentFloor ? 1 : targetFloor < currentFloor ? -1 : 0;
+    const dir = targetFloor > currentFloor ? 1 : targetFloor < currentFloor ? -1 : 0;
 
-    updateIndicator({ floor: displayed, dir: direction });
+    updateIndicator(displayed, dir);
 
-    // Step-count floors
     const stepTime = Math.max(180, Math.floor(duration / Math.max(1, delta || 1)));
     const timer = setInterval(() => {
       if (displayed === targetFloor) return;
-      displayed += direction;
-      updateIndicator({ floor: displayed, dir: direction });
+      displayed += dir;
+      updateIndicator(displayed, dir);
     }, stepTime);
 
     const basePos = camera.position.clone();
@@ -741,7 +659,6 @@ export function mountElevator(container) {
     await animate({
       duration,
       onUpdate: (t) => {
-        // movement illusion: subtle rumble, warm light flicker
         const mid = Math.sin(Math.PI * t);
         const shake = 0.006 + 0.016 * mid;
 
@@ -749,55 +666,61 @@ export function mountElevator(container) {
         camera.position.y = basePos.y + Math.sin(t * 57) * shake * 0.6;
         camera.position.z = basePos.z + Math.sin(t * 38) * shake;
 
-        key.intensity = baseKey + 0.08 * Math.sin(t * 22);
-        fill.intensity = baseFill + 0.06 * Math.sin(t * 25);
+        // subtle luxury “flicker”
+        key.intensity = baseKey + 0.06 * Math.sin(t * 21);
+        fill.intensity = baseFill + 0.05 * Math.sin(t * 23);
       }
     });
 
     clearInterval(timer);
-
     camera.position.copy(basePos);
     key.intensity = baseKey;
     fill.intensity = baseFill;
 
     currentFloor = targetFloor;
-    updateIndicator({ floor: currentFloor, dir: 0 });
+    updateIndicator(currentFloor, 0);
+    setRowActive(currentFloor);
   }
 
-  async function handleFloorSelect(targetFloor, keyName, hit) {
+  function openSection(keyName) {
+    if (keyName === "about") return openDrawer({ title: "About", desc: "Personal information", html: aboutHtml() });
+    if (keyName === "projects") return openDrawer({ title: "Projects", desc: "Featured projects", html: projectsHtml() });
+    if (keyName === "skills") return openDrawer({ title: "Skills", desc: "Tech stack", html: skillsHtml() });
+    if (keyName === "demos") return openDrawer({ title: "Demos", desc: "Proof of work / placeholders", html: demosHtml() });
+    if (keyName === "contact") return openDrawer({ title: "Contact", desc: "Reach me", html: contactHtml() });
+
+    return openDrawer({ title: "Section", desc: "Not wired yet", html: `<p class="mini">Unknown key: ${keyName}</p>` });
+  }
+
+  async function handleSelectFloor(hitObj) {
     if (busy) return;
     busy = true;
 
-    // Close content drawer when selecting another floor
     closeDrawer();
 
-    // Highlight selected row + button
-    const btnMesh = hit.userData.btnMesh;
-    const originalBtnMat = btnMesh.material;
-    btnMesh.material = buttonActiveMat;
-
-    // Tile highlight
-    ELEVATOR_FLOORS.forEach((f) => setTileActive(f.floor, f.floor === targetFloor));
+    const { floor, key: keyName, btn } = hitObj.userData;
+    const originalBtnMat = btn.material;
+    btn.material = buttonActiveMat;
 
     try {
       if (doorsOpen) await animateDoors(false);
 
-      if (targetFloor !== currentFloor) {
-        await simulateTravel(targetFloor);
+      if (floor !== currentFloor) {
+        await simulateTravel(floor);
       } else {
-        updateIndicator({ floor: currentFloor, dir: 0 });
+        updateIndicator(currentFloor, 0);
+        setRowActive(currentFloor);
       }
 
       await animateDoors(true);
       openSection(keyName);
     } finally {
-      // Keep tile highlight on current floor, but return button material after animation
-      setTimeout(() => { btnMesh.material = originalBtnMat; }, 700);
+      setTimeout(() => { btn.material = originalBtnMat; }, 700);
       busy = false;
     }
   }
 
-  /* ------------------ raycasting for row clicks ------------------ */
+  /* ---------------- raycasting ---------------- */
 
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
@@ -825,25 +748,21 @@ export function mountElevator(container) {
     raycaster.setFromCamera(pointer, camera);
     const hits = raycaster.intersectObjects(clickTargets, false);
     if (!hits.length) return;
-
-    const hit = hits[0].object;
-    const { floor, key } = hit.userData;
-    handleFloorSelect(floor, key, hit);
+    handleSelectFloor(hits[0].object);
   }
 
   renderer.domElement.addEventListener("pointermove", onPointerMove);
   renderer.domElement.addEventListener("pointerdown", onPointerDown);
 
-  // When user closes drawer, doors close (clean experience)
   async function closeDrawerAndDoors() {
     if (busy) return;
     closeDrawer();
     if (doorsOpen) await animateDoors(false);
   }
+
   stage.querySelector("#infoClose").addEventListener("click", closeDrawerAndDoors);
   stage.querySelector("#closeBtn").addEventListener("click", closeDrawerAndDoors);
 
-  // Reset
   stage.querySelector("#resetBtn").addEventListener("click", async () => {
     if (busy) return;
     busy = true;
@@ -852,19 +771,19 @@ export function mountElevator(container) {
       if (doorsOpen) await animateDoors(false);
 
       currentFloor = 1;
-      updateIndicator({ floor: 1, dir: 0 });
+      updateIndicator(1, 0);
+      setRowActive(1);
 
-      ELEVATOR_FLOORS.forEach((f) => setTileActive(f.floor, f.floor === 1));
-
-      camera.position.set(-0.22, 1.45, -1.18);
-      controls.target.set(0, 1.25, 1.05);
+      camera.position.set(-0.35, 1.48, -halfD + 0.55);
+      controls.target.copy(target);
       controls.update();
     } finally {
       busy = false;
     }
   });
 
-  // Resize
+  /* ---------------- resize + loop ---------------- */
+
   const onResize = () => {
     const w = stage.clientWidth;
     const h = stage.clientHeight;
@@ -874,13 +793,12 @@ export function mountElevator(container) {
   };
   window.addEventListener("resize", onResize);
 
-  // Initial state
-  updateIndicator({ floor: 1, dir: 0 });
-  ELEVATOR_FLOORS.forEach((f) => setTileActive(f.floor, f.floor === 1));
+  // initial state
+  updateIndicator(1, 0);
+  setRowActive(1);
 
-  // Render loop
-  let raf = 0;
   let disposed = false;
+  let raf = 0;
 
   const tick = () => {
     if (disposed) return;
@@ -890,7 +808,8 @@ export function mountElevator(container) {
   };
   tick();
 
-  // Cleanup
+  /* ---------------- cleanup ---------------- */
+
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
@@ -901,16 +820,15 @@ export function mountElevator(container) {
 
     controls.dispose();
 
-    // Dispose textures created at runtime
     disposableTextures.forEach((t) => t?.dispose?.());
 
     scene.traverse((obj) => {
-      if (obj.isMesh) {
-        obj.geometry?.dispose?.();
-        const m = obj.material;
-        if (Array.isArray(m)) m.forEach((mm) => mm.dispose?.());
-        else m?.dispose?.();
-      }
+      if (!obj.isMesh) return;
+      obj.geometry?.dispose?.();
+      const m = obj.material;
+      if (Array.isArray(m)) m.forEach((mm) => mm.dispose?.());
+      else m?.dispose?.();
+      if (m?.map?.dispose) m.map.dispose();
     });
 
     renderer.dispose();

@@ -100,33 +100,11 @@ export const PROJECTS = [
   }
 ];
 
-/**
- * 3D room interaction mapping:
- * These keys must match mesh/object names in your GLB (case-sensitive).
- * If a clicked object name isn't found, the UI will show a default message.
- */
-export const ROOM_HOTSPOTS = {
-  // Desk objects you requested
-  Computer: {
-    title: "Projects",
-    description: "Featured projects and outcomes (click individual cards for details).",
-    mode: "projects"
-  },
-  IDCard: {
-    title: "About Jason",
-    description: "Personal information, focus areas, and contact placeholders.",
-    mode: "about"
-  },
 
-  // Optional extras (wire later if you add objects with these names)
-  Notebook: {
-    title: "Skills / Tech stack",
-    description: "Languages, web stack, and systems tools used across projects.",
-    mode: "skills"
-  },
-  Phone: {
-    title: "Contact",
-    description: "Email and LinkedIn placeholders (replace with your real links).",
-    mode: "contact"
-  }
-};
+export const ELEVATOR_FLOORS = [
+  { floor: 1, key: "about", label: "About" },
+  { floor: 2, key: "projects", label: "Projects" },
+  { floor: 3, key: "skills", label: "Skills" },
+  { floor: 4, key: "demos", label: "Demos" },
+  { floor: 5, key: "contact", label: "Contact" }
+];

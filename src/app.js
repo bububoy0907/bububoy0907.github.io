@@ -62,7 +62,7 @@ const app = document.getElementById("app");
 app.appendChild(makeShell());
 
 // Default route
-if (!window.location.hash) setHashRoute("/");
+if (!window.location.hash) setHashRoute("/traditional");
 
 render();
 onRouteChange(render);

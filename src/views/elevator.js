@@ -304,14 +304,23 @@ export function mountElevator(container) {
 
   // Look toward door center; panel is on right near doors
   controls.target.set(0, 1.25, 1.05);
+  // Your camera is BEHIND the target (facing the doors), so theta is near -Math.PI.
+  // Clamp around -PI to prevent OrbitControls from snapping outside.
+  const AZ = 0.65;
+  controls.minAzimuthAngle = -Math.PI - AZ;
+  controls.maxAzimuthAngle = -Math.PI + AZ;
 
-  // Keep user inside, limited angles
-  controls.minAzimuthAngle = -0.65;
-  controls.maxAzimuthAngle = 0.85;
-  controls.minPolarAngle = 1.10;
-  controls.maxPolarAngle = 1.48;
+  // Keep pitch reasonable (avoid looking at ceiling/floor too much)
+  controls.minPolarAngle = 1.12;
+  controls.maxPolarAngle = 1.46;
+
+  // Keep zoom inside the cabin
   controls.minDistance = 1.45;
-  controls.maxDistance = 2.6;
+  controls.maxDistance = 2.35;
+  
+  camera.position.set(-0.22, 1.45, -1.18);
+  controls.update();
+  controls.saveState?.();
 
   // Luxury lighting: warm downlights + subtle accent
   const amb = new THREE.AmbientLight(0xfff0d8, 0.28);

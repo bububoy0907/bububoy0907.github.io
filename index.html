@@ -1,49 +1,24 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Cozy Anime Room — Jason Wong</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description"
-      content="Warm, cozy, toon-shaded WebGL room for Jason Wong's profile." />
-    <link rel="icon" href="./assets/icons/favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jason Wong | Portfolio</title>
+    <meta name="description" content="Jason Wong (Wong Tsz Yeung) — Junior/Graduate Software Engineer portfolio." />
     <link rel="stylesheet" href="./styles.css" />
 
-    <!-- 🔧 Import map tells the browser what "three" means -->
+    <!-- Three.js via importmap (no build step required) -->
     <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
       }
-    }
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#ui">Skip to info</a>
-
-    <canvas id="webgl" aria-label="3D scene"></canvas>
-
-    <section id="ui" role="region" aria-label="Profile info overlay">
-      <header class="hud">
-        <h1>Jason Tsz-Yeung Wong</h1>
-        <p>Software Developer — Unity/C#, WebAR (8th Wall), React/Node</p>
-        <nav class="hud__links">
-          <a href="https://linkedin.com/in/…" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://github.com/…" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="mailto:you@example.com">Email</a>
-        </nav>
-      </header>
-
-      <div class="cards" id="info-cards"></div>
-
-      <div class="controls">
-        <button id="nextSpot" aria-label="Go to next viewpoint">Next Spot →</button>
-        <span class="hint">Single-click = next spot. Drag to look, scroll to zoom.</span>
-      </div>
-    </section>
-
-    <!-- IMPORTANT: relative path for GitHub Pages -->
-    <script type="module" src="./src/main.js"></script>
+    <div id="app"></div>
+    <script type="module" src="./src/app.js"></script>
   </body>
 </html>

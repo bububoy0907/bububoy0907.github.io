@@ -285,42 +285,21 @@ export function mountElevator(container) {
 
   // Scene
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x07090d);
-
-  // Camera: inside elevator, facing doors with panel in view
   const camera = new THREE.PerspectiveCamera(
-    52,
+    50,
     stage.clientWidth / stage.clientHeight,
     0.1,
     100
   );
-  // Slightly left-of-center so right-side panel is visible without rotating
-  camera.position.set(-0.22, 1.45, -1.18);
+  camera.position.set(0, 1.45, 2.6);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enablePan = false;
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
-
-  // Look toward door center; panel is on right near doors
- // controls.target.set(0, 1.25, 1.05);
-  // Your camera is BEHIND the target (facing the doors), so theta is near -Math.PI.
-  // Clamp around -PI to prevent OrbitControls from snapping outside.
-  //const AZ = 0.65;
- // controls.minAzimuthAngle = -Math.PI - AZ;
-  //controls.maxAzimuthAngle = -Math.PI + AZ;
-
-  // Keep pitch reasonable (avoid looking at ceiling/floor too much)
-  //controls.minPolarAngle = 1.12;
-  //controls.maxPolarAngle = 1.46;
-
-  // Keep zoom inside the cabin
-  //controls.minDistance = 1.45;
-  //controls.maxDistance = 2.35;
-  
-  //camera.position.set(-0.22, 1.45, -1.18);
-  //controls.update();
-  //controls.saveState?.();
+  controls.minDistance = 1.8;
+  controls.maxDistance = 3.8;
+  controls.target.set(0, 1.25, 0);
 
   // Luxury lighting: warm downlights + subtle accent
   const amb = new THREE.AmbientLight(0xfff0d8, 0.28);

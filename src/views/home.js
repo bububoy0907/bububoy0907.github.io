@@ -1,5 +1,5 @@
 import { setHashRoute } from "../router.js";
-import { PROFILE } from "src/content.js";
+import { PROFILE } from "..content.js";
 
 function attachCreativePointerGlow(el) {
   el.addEventListener("pointermove", (e) => {

@@ -461,3 +461,69 @@ canvas{ display:block; }
   border-top: 1px solid rgba(255,255,255,0.10);
   margin: 12px 0;
 }
+/* Elevator in-view info panel */
+.infoDrawer{
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 20;
+  max-width: 680px;
+  background: rgba(0,0,0,0.48);
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.infoDrawer.open{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.infoDrawerHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.infoDrawerHeader h3{
+  margin: 0;
+  font-size: 15px;
+}
+
+.infoDrawerHeader p{
+  margin: 6px 0 0;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.infoDrawerBody{
+  padding: 12px 14px 14px;
+  max-height: min(56vh, 520px);
+  overflow:auto;
+}
+
+.infoDrawerClose{
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor:pointer;
+}
+.infoDrawerClose:hover{ background: rgba(255,255,255,0.10); }
+
+@media (min-width: 900px){
+  .infoDrawer{ left: 14px; right: auto; width: 640px; }
+}

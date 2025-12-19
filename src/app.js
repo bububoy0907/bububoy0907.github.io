@@ -1,12 +1,13 @@
 import { getHashRoute, onRouteChange, setHashRoute } from "./router.js";
 import { mountHome } from "./views/home.js";
 import { mountTraditional } from "./views/traditional.js";
-import { mountElevator } from "./views/elevator.js";
+//import { mountElevator } from "./views/elevator.js";
+import { mountElevatorComingSoon } from "./views/elevatorComingSoon.js";
 
 const routes = {
   "/": mountHome,
   "/traditional": mountTraditional,
-  "/room": mountElevator
+  "/room": mountElevatorComingSoon
 };
 
 function makeShell() {

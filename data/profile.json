@@ -1,7 +1,0 @@
-{
-  "cards": [
-    { "title": "About", "text": "Unity simulation, WebAR, full-stack. I value reliability, metrics, and docs." },
-    { "title": "Projects", "text": "AI Driving Sim (Case Study), PolyU Info Day WebAR, PetMatch MVP, Unity Tools." },
-    { "title": "Experience", "text": "GoToSim (2025–), PolyU (2024), 3CFORGE (2020), WishCraft (2017–2020)." }
-  ]
-}

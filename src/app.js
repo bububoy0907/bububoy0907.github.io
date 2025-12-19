@@ -5,8 +5,8 @@ import { mountTraditional } from "./views/traditional.js";
 import { mountElevatorComingSoon } from "./views/elevatorComingSoon.js";
 
 const routes = {
-  "/": mountHome,
   "/traditional": mountTraditional,
+  "/": mountHome,
   "/room": mountElevatorComingSoon
 };
 

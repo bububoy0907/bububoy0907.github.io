@@ -60,12 +60,14 @@ function projectCard(p) {
       </div>
     </div>
 
+
+  `;
+  /*^^^
     <div class="linksRow" aria-label="Project links">
       <span class="linksLabel">Links</span>
       <div class="linkChips"></div>
     </div>
-  `;
-
+  */
   // Build thumbnail with JS so we can:
   // - show full image (contain)
   // - detect portrait vs landscape
@@ -103,12 +105,13 @@ function projectCard(p) {
   el.insertBefore(thumb, linksRow);
 
   // Links
+  /*
   const linkWrap = el.querySelector(".linkChips");
   linkWrap.appendChild(linkChip(p.links.repo));
   linkWrap.appendChild(linkChip(p.links.demo));
   linkWrap.appendChild(linkChip(p.links.caseStudy));
   linkWrap.appendChild(linkChip(p.links.readme));
-
+  */
   return el;
 }
 

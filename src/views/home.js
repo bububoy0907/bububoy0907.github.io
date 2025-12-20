@@ -16,29 +16,23 @@ export function mountHome(container) {
   wrap.className = "container";
 
   const card = document.createElement("section");
-  card.className = "card hero";
+  card.className = "card hero homeCenter";
 
   card.innerHTML = `
     <h1 class="h1">${PROFILE.name}</h1>
     <p class="sub">
       ${PROFILE.shortIntro}
     </p>
-
-    <div class="pills">
-      <span class="pill">${PROFILE.titlePrimary}</span>
-      <span class="pill">${PROFILE.titleSecondary}</span>
-      <span class="pill">${PROFILE.location}</span>
-      <span class="pill">${PROFILE.education}</span>
-    </div>
+    
 
     <div class="ctaRow">
       <button class="btn btnPrimary btnCreative" data-route="/traditional" aria-label="Open traditional portfolio view">
-        Traditional View
+        Main Portfolio
         <span style="opacity:.78;font-weight:600;">→</span>
       </button>
 
       <button class="btn btnCreative" data-route="/room" aria-label="Open interactive 3D portfolio view">
-        Interactive 3D Room
+        Interactive Preview (Coming Soon)
         <span style="opacity:.78;font-weight:600;">→</span>
       </button>
     </div>
@@ -46,11 +40,13 @@ export function mountHome(container) {
     <div class="section" style="margin-top:18px;">
       <h2>How to use this portfolio</h2>
       <p>
-        Use <strong>Traditional View</strong> for a recruiter-friendly scan of projects, outcomes, and screenshots.
-        Use <strong>Interactive 3D Room</strong> to explore by clicking objects on the desk (Computer for projects, ID card for personal info).
+        Use <strong>Main Portfolio</strong> for a quick scan of my projects, outcomes, and screenshots.
+        </p>
+        <p>
+        Use <strong>Interactive Preview </strong> to explore my portfolio in a interactive 3D envrionment.
       </p>
       <p class="mini">
-        Tip: If WebGL performance is limited on your device, the Traditional View is the fastest way to review.
+        Tip: If WebGL performance is limited on your device, the Main Portfolio is the fastest way to review.
       </p>
     </div>
   `;

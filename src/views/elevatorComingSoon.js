@@ -14,7 +14,7 @@ export function mountElevatorComingSoon(container) {
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h2 class="h2">What will be here later</h2>
+        <h2 class="h2">&nbsp;&nbspWhat will be here later</h2>
         <ul class="mini" style="line-height:1.7;">
           <li>Interactive elevator buttons for: About / Projects / Skills / Demos / Contact</li>
           <li>Door open/close + floor indicator animation</li>
@@ -24,7 +24,7 @@ export function mountElevatorComingSoon(container) {
         <hr class="smallHr"/>
 
         <p class="mini">
-          For now, the full portfolio content is available in the Traditional view.
+          &nbsp;&nbsp&nbsp;&nbspFor now, the full portfolio content is available in the Traditional view.
         </p>
       </section>
     </div>

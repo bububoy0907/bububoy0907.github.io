@@ -121,6 +121,34 @@ main{
 }
 .hero > *{ position:relative; }
 
+/* Home page centering */
+.homeCenter {
+  text-align: center;
+}
+
+.homeCenter .sub,
+.homeCenter .section p {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 820px; /* keeps centered paragraphs readable */
+}
+
+/* Center pills row */
+.homeCenter .pills {
+  justify-content: center;
+}
+
+/* Center CTA buttons row */
+.homeCenter .ctaRow {
+  justify-content: center;
+}
+.homeCenter .pills,
+.homeCenter .ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .h1{
   font-size: clamp(26px, 4vw, 42px);
   margin: 0 0 8px;
@@ -274,25 +302,44 @@ main{
   border-radius: 8px;
 }
 
+/* Thumbnail container: show FULL screenshot (no crop) */
 .thumb{
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 220px;                 /* consistent card layout */
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.22);
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:
+    radial-gradient(600px 260px at 20% 20%, rgba(124,92,255,0.10), transparent 55%),
+    radial-gradient(600px 260px at 80% 30%, rgba(0,212,255,0.08), transparent 55%),
+    rgba(0,0,0,0.22);
+  overflow: hidden;
+  display: flex;                 /* fix: your file had display:fill (invalid) */
+  align-items: center;
+  justify-content: center;
   color: rgba(255,255,255,0.55);
   font-size: 12px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
+
+/* Make portrait screenshots taller so they are still readable */
+.thumb--portrait{
+  height: 320px;
+}
+
+/* Responsive heights */
+@media (max-width: 520px){
+  .thumb{ height: 200px; }
+  .thumb--portrait{ height: 280px; }
+}
+
+/* Show full image without cropping */
 .thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;           /* key change */
+  display: block;
+  padding: 6px;                  /* keeps a clean border around letterboxing */
+  cursor: zoom-in;               /* optional: indicates it can be opened */
 }
 
 .links{
@@ -526,4 +573,257 @@ canvas{ display:block; }
 
 @media (min-width: 900px){
   .infoDrawer{ left: 14px; right: auto; width: 640px; }
+}
+
+:root{
+  --subtle: rgba(255,255,255,0.55);
+  --chipBg: rgba(255,255,255,0.06);
+  --chipBorder: rgba(255,255,255,0.12);
+
+  /* Highlight style for tech pills */
+  --techPillBg: rgba(0,212,255,0.16);
+  --techPillBorder: rgba(0,212,255,0.34);
+
+  /* Default section accent (overridden per-section below) */
+  --sectionAccentDefault: var(--accent);
+}
+
+/* ==========================================================================
+   Section color system (different color per section + title vs content)
+   Assumes sections use: class="card section section--about" etc.
+   ========================================================================== */
+
+.section{ --sectionAccent: var(--sectionAccentDefault); }
+
+/* Per-section accents */
+.section--about{ --sectionAccent: #7dd3fc; }      /* light blue */
+.section--projects{ --sectionAccent: #a7f3d0; }   /* mint */
+.section--skills{ --sectionAccent: #fca5a5; }     /* soft red */
+.section--research{ --sectionAccent: #c4b5fd; }   /* lavender */
+.section--looking{ --sectionAccent: #fdba74; }    /* amber */
+.section--contact{ --sectionAccent: #f9a8d4; }    /* pink */
+
+.card.section{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Accent strip on the left to visually separate sections */
+.card.section::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width: 4px;
+  background: var(--sectionAccent);
+  opacity: 0.90;
+}
+
+/* Title color differs from body text */
+.section h2{
+  color: var(--sectionAccent);
+}
+
+/* Keep paragraphs readable and distinct from headings */
+.section p{
+  color: var(--muted);
+}
+
+/* Labels (e.g., "Responsibilities", "Tech", "Links") in subtle tone */
+.kvLabel,
+.linksLabel,
+.skillLabel,
+.kvLabelInline{
+  color: var(--subtle);
+}
+
+/* ==========================================================================
+   Project cards: period top-right + bullet responsibilities
+   Assumes updated markup uses:
+   .projectHead .projectTitle .projectPeriod
+   ========================================================================== */
+
+.projectHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.projectTitle{
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.projectPeriod{
+  white-space: nowrap;
+  font-size: 12px;
+  padding-top: 2px;
+  color: var(--subtle);
+}
+
+/* Bullet list for project responsibilities */
+.bullets{
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: rgba(255,255,255,0.86);
+  line-height: 1.55;
+}
+
+.bullets li{
+  margin: 6px 0;
+}
+
+/* If your updated HTML wraps key/value rows */
+.kvRow{
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   Tech / Skills pills (highlight color for tech pills)
+   Assumes:
+   - Project tech row uses .chipRow and .chip--tech
+   - Skills section uses .chip--skill
+   ========================================================================== */
+
+.chipRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Base chip */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  border: 1px solid var(--chipBorder);
+  background: var(--chipBg);
+  color: rgba(255,255,255,0.88);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Highlighted tech pills */
+.chip--tech{
+  background: var(--techPillBg);
+  border-color: var(--techPillBorder);
+}
+
+/* Skill pills (resume-like) */
+.chip--skill{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.14);
+}
+
+/* ==========================================================================
+   Links row alignment fix
+   Assumes updated markup uses:
+   <div class="linksRow"><span class="linksLabel">Links</span><div class="linkChips">...</div></div>
+   ========================================================================== */
+
+.linksRow{
+  display:flex;
+  align-items:center;     /* key: aligns "Links" text with buttons */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.linksLabel{
+  font-size: 13px;
+  line-height: 1;         /* prevents baseline drift */
+  padding-top: 1px;
+}
+
+.linkChips{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+}
+
+/* Ensure link buttons align nicely in a row */
+.link{
+  display:inline-flex;    /* key: fixes baseline misalignment with label text */
+  align-items:center;
+  line-height: 1;
+}
+
+/* Backward compatibility: if your old markup still uses .links wrapper */
+.links{
+  align-items:center;
+}
+
+/* ==========================================================================
+   Skills/Tech Stack section layout (resume-style pills with left labels)
+   Assumes updated markup uses:
+   .skillsWrap .skillGroup .skillLabel .skillPills
+   ========================================================================== */
+
+.skillsWrap{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+}
+
+.skillGroup{
+  display:grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items:start;
+}
+
+.skillLabel{
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.skillPills{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Optional: tighten project meta spacing when you add projectHead
+   ========================================================================== */
+
+.projectCard .meta{
+  margin-top: 0;
+}
+
+/* Optional: make project cards feel slightly more distinct */
+.projectCard{
+  background: rgba(255,255,255,0.028);
+}
+
+/* Optional: ensure thumb spacing remains consistent with new KV blocks */
+.thumb{
+  margin-top: 12px;
+}
+
+.contactGrid {
+  display: grid;
+  gap: 10px;              /* spacing between rows */
+}
+
+.contactRow {
+  display: grid;
+  grid-template-columns: 110px 1fr; /* label column + value column */
+  align-items: center;
+  column-gap: 12px;
+}
+
+.kvLabelInline {
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.contactLink {
+  justify-self: start;
+  word-break: break-word; /* prevents long urls from breaking layout */
 }

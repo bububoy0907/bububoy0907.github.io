@@ -118,7 +118,7 @@ function skillsHtml() {
     <p><strong>Languages</strong>: ${SKILLS.languages.join(", ")}</p>
     <p><strong>Web</strong>: ${SKILLS.web.join(", ")}</p>
     <p><strong>Systems/Tools</strong>: ${SKILLS.systems.join(", ")}</p>
-    <p><strong>3D/Simulation</strong>: ${SKILLS.simulation.join(", ")}</p>
+    <p><strong>3D/Simulation</strong>: ${SKILLS.additionals.join(", ")}</p>
   `;
 }
 

@@ -1,64 +1,65 @@
-import { setHashRoute } from "../router.js";
+// src/views/home.js
 import { PROFILE } from "../content.js";
-
-function attachCreativePointerGlow(el) {
-  el.addEventListener("pointermove", (e) => {
-    const r = el.getBoundingClientRect();
-    const mx = ((e.clientX - r.left) / r.width) * 100;
-    const my = ((e.clientY - r.top) / r.height) * 100;
-    el.style.setProperty("--mx", `${mx}%`);
-    el.style.setProperty("--my", `${my}%`);
-  });
-}
 
 export function mountHome(container) {
   const wrap = document.createElement("div");
-  wrap.className = "container";
+  wrap.className = "home";
 
-  const card = document.createElement("section");
-  card.className = "card hero homeCenter";
+  wrap.innerHTML = `
+    <section class="hero hero--video">
+      <div class="heroMedia" aria-hidden="true">
+        <video class="heroVideo" autoplay muted playsinline loop preload="metadata">
+          <source src="./assets/media/hero.mp4" type="video/mp4" />
+        </video>
+        <div class="heroOverlay"></div>
+      </div>
 
-  card.innerHTML = `
-    <h1 class="h1">${PROFILE.name}</h1>
-    <p class="sub">
-      ${PROFILE.shortIntro}
-    </p>
-    
+      <div class="container heroContent">
+        <div class="heroKicker">Portfolio</div>
+        <h1 class="heroTitle">${PROFILE.name}</h1>
+        <p class="heroSubtitle">${PROFILE.shortIntro}</p>
 
-    <div class="ctaRow">
-      <button class="btn btnPrimary btnCreative" data-route="/traditional" aria-label="Open traditional portfolio view">
-        Main Portfolio
-        <span style="opacity:.78;font-weight:600;">→</span>
-      </button>
+        <div class="heroCtas">
+          
+              <a class="hsCta" href="#/for-recruiters" aria-label="Open For Recruiters page">
+                <span class="hsCtaInner">
+                  <span class="hsCtaLine">For Recruiters</span>
+                  <span class="hsCtaLine">For Recruiters</span>
+                </span>
+              </a>
 
-      <button class="btn btnCreative" data-route="/room" aria-label="Open interactive 3D portfolio view">
-        Interactive Preview (Coming Soon)
-        <span style="opacity:.78;font-weight:600;">→</span>
-      </button>
-    </div>
+              <a class="hsCta hsCta--ghost" href="#/traditional" aria-label="Open Main Portfolio page">
+                <span class="hsCtaInner">
+                  <span class="hsCtaLine">Main Portfolio</span>
+                  <span class="hsCtaLine">Main Portfolio</span>
+                </span>
+              </a>
+              
+            
+        </div>
 
-    <div class="section" style="margin-top:18px;">
-      <h2>How to use this portfolio</h2>
-      <p>
-        Use <strong>Main Portfolio</strong> for a quick scan of my projects, outcomes, and screenshots.
-        </p>
-        <p>
-        Use <strong>Interactive Preview </strong> to explore my portfolio in a interactive 3D envrionment.
-      </p>
-      <p class="mini">
-        Tip: If WebGL performance is limited on your device, the Main Portfolio is the fastest way to review.
-      </p>
-    </div>
+      </div>
+    </section>
+
+    <footer class="homeFooter">
+      <div class="container homeFooterInner">
+        <div class="footerCol">
+          <div class="footerLabel">Email</div>
+          <a class="footerLink" href="mailto:${PROFILE.contact.email}">${PROFILE.contact.email}</a>
+        </div>
+        <div class="footerCol">
+          <div class="footerLabel">LinkedIn</div>
+          <a class="footerLink" href="https://${PROFILE.contact.linkedin}" target="_blank" rel="noreferrer">${PROFILE.contact.linkedin}</a>
+        </div>
+        <div class="footerCol">
+          <div class="footerLabel">GitHub</div>
+          <a class="footerLink" href="https://${PROFILE.contact.github}" target="_blank" rel="noreferrer">${PROFILE.contact.github}</a>
+        </div>
+      </div>
+    </footer>
   `;
 
-  wrap.appendChild(card);
   container.appendChild(wrap);
-
-  const buttons = card.querySelectorAll("button[data-route]");
-  buttons.forEach((btn) => {
-    attachCreativePointerGlow(btn);
-    btn.addEventListener("click", () => setHashRoute(btn.dataset.route));
-  });
 
   return () => {
     container.innerHTML = "";

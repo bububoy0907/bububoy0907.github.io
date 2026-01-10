@@ -226,7 +226,10 @@ export function mountTraditional(container) {
         </a>
       </div>
     </div>
+
+    
   `;
+  
   wrap.appendChild(contact);
 
   container.appendChild(wrap);

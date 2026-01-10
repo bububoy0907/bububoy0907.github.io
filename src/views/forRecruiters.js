@@ -567,7 +567,17 @@ export function mountForRecruiters(container) {
         ${renderIconMarquee()}
       </div>
     </section>
-
+    <section class="hsSection hsSection--white">
+      <div class="container" data-reveal>
+        <div class="hsSectionTop">
+          <h2 class="hsH2">About Me</h2>
+          <div class="hsRule"></div>
+        </div>
+        <p>HK PolyU BSc Computing graduate who is passionate about software development / coding </p>
+        <p>Experienced in TypeScript/JavaScript web development, Unity/C#, and operating live services</p>
+        <p>Actively looking for software engineer position</p>
+      </div>
+    </section>
     <section class="hsSection hsSection--white">
       <div class="container" data-reveal>
         <div class="hsSectionTop">
@@ -582,7 +592,7 @@ export function mountForRecruiters(container) {
     <section class="hsSection hsSection--white">
       <div class="container" data-reveal>
         <div class="hsSectionTop">
-          <h2 class="hsH2">Project Experience</h2>
+          <h2 class="hsH2">Project Experiences</h2>
           <div class="hsRule"></div>
         </div>
 

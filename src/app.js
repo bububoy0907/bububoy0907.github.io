@@ -47,7 +47,7 @@ function makeShell() {
           <a class="menuLink" href="#/contact" data-nav="/contact">Contact</a>
         </nav>
 
-        <div class="menuHint">Tip: Press Esc to close.</div>
+        <div class="menuHint">Tap anywhere to close</div>
       </div>
     </div>
 

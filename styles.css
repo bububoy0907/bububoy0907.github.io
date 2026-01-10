@@ -2482,3 +2482,171 @@ details[open] .hsAccBodyInner{
   user-select: none;
   -webkit-user-drag: none;
 }
+
+/* =========================================================
+   Contact page only: white theme + centered + no header gap
+   Add this at the VERY BOTTOM of styles.css
+   ========================================================= */
+
+body.themeContact{
+  /* switch the page to a plain white surface */
+  background: #fff;
+  color: rgba(0,0,0,0.92);
+
+  /* override your design tokens locally */
+  --bg: #fff;
+  --text: rgba(0,0,0,0.92);
+  --muted: rgba(0,0,0,0.64);
+  --line: rgba(0,0,0,0.12);
+  --panel: rgba(0,0,0,0.03);
+  --panel2: rgba(0,0,0,0.06);
+}
+
+/* 1) Header (topbar) becomes white ONLY on contact page */
+body.themeContact .topbar{
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.10);
+  backdrop-filter: blur(12px);
+}
+
+/* nav colors on white header */
+body.themeContact .brand span{ color: rgba(0,0,0,0.60); }
+
+body.themeContact .navlinks a{
+  color: rgba(0,0,0,0.68);
+}
+body.themeContact .navlinks a:hover{
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.92);
+  text-decoration: none;
+}
+body.themeContact .navlinks a.active{
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.92);
+}
+
+/* 2) Remove the gap below header: override global main padding-top */
+body.themeContact main,
+body.themeContact #main{
+  padding-top: 0;          /* key line that removes the “gap” */
+  /* keep your bottom spacing if you want */
+  padding-bottom: 60px;
+}
+
+/* 3) Center everything on the contact page */
+body.themeContact .contactPage{
+  width: 100%;
+}
+
+body.themeContact .contactWrap{
+  /* header is sticky and takes space in normal flow, so this works well */
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* tune these if you want it tighter/looser */
+  padding: 18px 0 60px;
+  gap: 16px;
+}
+
+/* ensure the divider is visible on white */
+body.themeContact .hsRule{
+  background: rgba(0,0,0,0.12);
+}
+
+/* tabs centered */
+body.themeContact .contactChooser{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* tabs styled for white page */
+body.themeContact .contactTab{
+  background: #fff;
+  color: rgba(0,0,0,0.90);
+  border: 1px solid rgba(0,0,0,0.16);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+body.themeContact .contactTab.active{
+  background: rgba(0,0,0,0.92);
+  color: #fff;
+  border-color: rgba(0,0,0,0.92);
+}
+
+/* panel centered + readable */
+body.themeContact .contactPanel{
+  width: min(720px, 100%);
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+/* make each row truly centered (stack label above value) */
+body.themeContact .contactPanelGrid{
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+body.themeContact .contactRow{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  justify-items: center;
+}
+
+body.themeContact .contactKey{
+  font-weight: 600;
+  color: rgba(0,0,0,0.60);
+}
+
+body.themeContact .contactVal a{
+  color: rgba(0,0,0,0.92);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+body.themeContact .contactVal a:hover{
+  opacity: 0.78;
+}
+/* Contact page header: force black title + black menu text/icon */
+body.themeContact .brandLink,
+body.themeContact .brandName,
+body.themeContact .brand,
+body.themeContact .brand span{
+  color: rgba(0,0,0,0.92) !important;
+}
+
+body.themeContact .menuBtn,
+body.themeContact .menuBtnText{
+  color: rgba(0,0,0,0.92) !important;
+}
+
+/* Menu "hamburger" lines (your icon uses pseudo-elements) */
+body.themeContact .menuIcon::before,
+body.themeContact .menuIcon::after{
+  background: rgba(0,0,0,0.92) !important;
+}
+
+/* If you're still using the older navlinks style */
+body.themeContact .navlinks a{
+  color: rgba(0,0,0,0.72);
+  border-color: rgba(0,0,0,0.12);
+}
+body.themeContact .navlinks a:hover{
+  background: rgba(0,0,0,0.04);
+  color: rgba(0,0,0,0.92);
+}
+body.themeContact .navlinks a.active{
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.92);
+}

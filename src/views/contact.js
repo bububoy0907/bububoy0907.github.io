@@ -39,11 +39,15 @@ function renderPanel(panel, item) {
       ${item.lines
         .map(
           (x) => `
-        <div class="contactRow">
-          <div class="contactKey">${x.k}</div>
-          <div class="contactVal"><a href="${x.href}" target="${x.href.startsWith("mailto:") ? "" : "_blank"}" rel="noreferrer">${x.v}</a></div>
-        </div>
-      `
+          <div class="contactRow contactRow--center">
+            <div class="contactKey">${x.k}</div>
+            <div class="contactVal">
+              <a href="${x.href}"
+                 target="${x.href.startsWith("mailto:") ? "" : "_blank"}"
+                 rel="noreferrer">${x.v}</a>
+            </div>
+          </div>
+        `
         )
         .join("")}
     </div>
@@ -51,6 +55,7 @@ function renderPanel(panel, item) {
 }
 
 export function mountContact(container) {
+    document.body.classList.add("themeContact");
   const wrap = document.createElement("div");
   wrap.className = "contactPage";
 
@@ -59,7 +64,7 @@ export function mountContact(container) {
       <div class="contactHead">
         <h1 class="hsH2">Contact</h1>
         <div class="hsRule"></div>
-        <p class="hsBody">Select a category to reveal the right contact path.</p>
+        <p class="hsBody">Please select your best-fit category</p>
       </div>
 
       <div class="contactChooser" role="tablist" aria-label="Contact categories"></div>
@@ -72,7 +77,7 @@ export function mountContact(container) {
 
   CONTACTS.forEach((c, idx) => {
     const btn = document.createElement("button");
-    btn.className = "contactTab";
+    btn.className = "contactTab contactTab--center";
     btn.type = "button";
     btn.textContent = c.label;
     btn.setAttribute("role", "tab");
@@ -96,6 +101,7 @@ export function mountContact(container) {
   container.appendChild(wrap);
 
   return () => {
+    document.body.classList.remove("themeContact");
     container.innerHTML = "";
   };
 }

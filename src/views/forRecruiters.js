@@ -79,6 +79,25 @@ const RECRUITER_PROJECT_META = {
       "Set up a Dockerized development environment and basic CI workflow to streamline onboarding and iterative delivery within a 2-week sprint.",
     ],
   },
+  candy: {
+    shortName: "Revenge Recipe",
+    detailTitle: "A Unity Candy-themed RPG Game Practice",
+    bullets: [
+      "Designed the candy-theme map and the terrain layout design within 1 week.",
+      "Designed the character model and the monster model.",
+      "Developed the quest system, game flow, and boss fight logic.",
+    ],
+  },
+  unreal: {
+    shortName: "Unreal Island",
+    detailTitle: "An Unreal Engine Auto-material Terrain Design Practice",
+    bullets: [
+      "Terrain-sculpting practice: recreated an island inspired by Sea of Thieves’ Smugglers Bay using UE Landscape.",
+      "Authored a custom terrain auto-material (slope/height blending) to minimize manual texture painting.",
+      "Applied Nanite where appropriate and tuned materials/assets for real-time stability.",
+      "Configured foliage rendering (trees/grass density + LOD) to balance visuals and performance."
+    ],
+  },
 };
 
 function recruiterMeta(p) {

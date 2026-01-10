@@ -26,10 +26,10 @@ export const SKILLS = {
 export const PROJECTS = [
   {
     id: "webar",
-    name: "WebAR Scavenger Hunt (PolyU COMP Info Day)",
+    name: "PolyU-GO!",
     period: "Sep – Nov 2024",
-    oneLiner: "Pokémon GO–style WebAR scavenger hunt delivered in ~4 weeks.",
-    responsibilities: [
+    oneLiner: "Pokémon GO–style WebAR scavenger hunt for PolyU COMP Info Day",
+    responsibilities: 
       "Implemented the AR experience and location-based gameplay logic end-to-end under a tight ~3–4 week timeline.",
       "Translated Figma UI designs into production UI, ensuring visual and interaction fidelity.",
       "Produced key 3D assets (full PolyU 3D campus model) used in the AR pipeline.",
@@ -59,7 +59,7 @@ export const PROJECTS = [
 
   {
     id: "unity",
-    name: "Hong Kong Driving Simulator R&D",
+    name: "Hong Kong Driving Simulator GoToSim R&D",
     period: "Apr – Jul 2024",
     oneLiner:
       "1:1 geospatial 3D replica of a Hong Kong driving-test route; demo-ready build under sprint constraints.",
@@ -106,9 +106,9 @@ export const PROJECTS = [
   // NEW: Capstone project
   {
     id: "capstone",
-    name: "AI-Based Private Car Driving Simulator (Capstone)",
+    name: "AI-Based Private Car Driving Simulator",
     period: "2024 – 2025",
-    oneLiner: "Capstone project focused on realistic Hong Kong driving scenarios; research write-up in progress.",
+    oneLiner: "Capstone project focused on realistic Hong Kong driving scenarios",
     responsibilities: [
       "Developed a driving-simulator capstone project aligned with realistic Hong Kong driving-test scenarios.",
       "Prepared research/technical write-up for an AI-based driving simulator paper in preparation with a PolyU supervisor.",
@@ -126,7 +126,7 @@ export const PROJECTS = [
 
   {
     id: "wishcraft",
-    name: "WishCraft — A Live MMORPG in Minecraft",
+    name: "BladeCyber — A Live MMORPG in Minecraft",
     period: "Jun 2017 – Nov 2020",
     oneLiner: "Hands-on experience running a live online service with reliability and scaling considerations.",
     responsibilities: [
@@ -170,7 +170,7 @@ export const PROJECTS = [
 
   {
     id: "petmatch",
-    name: "PetMatch (Full-stack practice project)",
+    name: "PetMatch",
     period: "2025",
     oneLiner: "A full-stack pet-matching marketplace concept with swipe-based discovery.",
     responsibilities: [

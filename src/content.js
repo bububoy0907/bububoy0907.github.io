@@ -41,7 +41,7 @@ export const PROJECTS = [
       repo: "[Repo Link]",
       demo: "[Demo Video Coming Soon]",
       caseStudy: "[Case Study]",
-      readme: "[Readme]"
+      readme: "[Readme"
     },
     screenshot: "./assets/screenshots/webar.png",
     gallery: [

@@ -8,7 +8,7 @@ export const PROFILE = {
   education:
     "BSc (Hons) in Computing , The Hong Kong Polytechnic University — Second-Class Honours (May 2025).",
   shortIntro:
-    "I build performance-conscious user experiences and real-time systems, from WebAR at scale to Unity-based simulation logic and production-style operations. Most recently, I shipped a Pokémon GO–style WebAR experience for a PolyU event that handled 2,000+ concurrent users, and I implemented 70+ driving-rule detections in a Unity driving simulator during my internship.",
+    "I make Games • Web Application • VR/AR • and more",
   contact: {
     email: "Wongbu0195@gmail.com",
     linkedin: "linkedin.com/in/jasonbubu",
@@ -43,7 +43,18 @@ export const PROJECTS = [
       caseStudy: "[Case Study]",
       readme: "[Readme]"
     },
-    screenshot: "./assets/screenshots/webar.png"
+    screenshot: "./assets/screenshots/webar.png",
+    gallery: [
+      { type: "image", src: "./assets/gallery/webar/01.webp", tag: "UI",   caption: "Map + quest flow" },
+      { type: "image", src: "./assets/gallery/webar/02.webp", tag: "AR",   caption: "Coin collection view" },
+      { type: "image", src: "./assets/gallery/webar/03.webp", tag: "AR",   caption: "Coin collection view" },
+      { type: "image", src: "./assets/gallery/webar/04.webp", tag: "UI",   caption: "Map + quest flow" },
+      { type: "image", src: "./assets/gallery/webar/05.webp", tag: "AR",   caption: "Coin collection view" },
+      { type: "image", src: "./assets/gallery/webar/06.webp", tag: "AR",   caption: "Coin collection view" },
+      { type: "image", src: "./assets/gallery/webar/07.webp", tag: "UI",   caption: "Map + quest flow" },
+      { type: "image", src: "./assets/gallery/webar/08.webp", tag: "AR",   caption: "Coin collection view" },
+      { type: "image", src: "./assets/gallery/webar/09.webp", tag: "AR",   caption: "Coin collection view" },
+    ],
   },
 
   {
@@ -67,7 +78,29 @@ export const PROJECTS = [
       caseStudy: "[Case Study]",
       readme: "[Readme]"
     },
-    screenshot: "./assets/screenshots/unity-driving.png"
+    screenshot: "./assets/screenshots/unity-driving.png",
+        gallery: [
+      { type: "image", src: "./assets/gallery/unity/01.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/02.webp", tag: "Logic", caption: "Traffic-rule detection UI" },
+      { type: "image", src: "./assets/gallery/unity/03.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/04.webp", tag: "Logic", caption: "Traffic-rule detection UI" },      
+      { type: "image", src: "./assets/gallery/unity/05.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/06.webp", tag: "Logic", caption: "Traffic-rule detection UI" },
+      { type: "image", src: "./assets/gallery/unity/07.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/08.webp", tag: "Logic", caption: "Traffic-rule detection UI" },  
+      { type: "image", src: "./assets/gallery/unity/09.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/10.webp", tag: "Logic", caption: "Traffic-rule detection UI" },
+      { type: "image", src: "./assets/gallery/unity/11.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/12.webp", tag: "Logic", caption: "Traffic-rule detection UI" },  
+      { type: "image", src: "./assets/gallery/unity/13.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/14.webp", tag: "Logic", caption: "Traffic-rule detection UI" },
+      { type: "image", src: "./assets/gallery/unity/15.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/16.webp", tag: "Logic", caption: "Traffic-rule detection UI" },  
+      { type: "image", src: "./assets/gallery/unity/17.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/18.webp", tag: "Logic", caption: "Traffic-rule detection UI" },
+      { type: "image", src: "./assets/gallery/unity/19.webp", tag: "Route", caption: "1:1 route replica (Happy Valley)" },
+      { type: "image", src: "./assets/gallery/unity/20.webp", tag: "Logic", caption: "Traffic-rule detection UI" },  
+    ],
   },
 
   // NEW: Capstone project
@@ -88,7 +121,7 @@ export const PROJECTS = [
       caseStudy: "[Case Study]",
       readme: "[Readme]"
     },
-    screenshot: "./assets/screenshots/capstone.png"
+    screenshot: "./assets/screenshots/capstone.png",
   },
 
   {
@@ -112,7 +145,27 @@ export const PROJECTS = [
       caseStudy: "[Case Study]",
       readme: "[Readme]"
     },
-    screenshot: "./assets/screenshots/wishcraft.png"
+    screenshot: "./assets/screenshots/wishcraft.png",
+        gallery: [
+      { type: "image", src: "./assets/gallery/wishcraft/01.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/02.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/03.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/04.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/05.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/06.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/07.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/08.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/09.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/10.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/11.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/12.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/13.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/14.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/15.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/16.webp", tag: "Community", caption: "Discord community + announcements" },
+      { type: "image", src: "./assets/gallery/wishcraft/17.webp", tag: "Ops",   caption: "Server operations / monitoring snapshot" },
+      { type: "image", src: "./assets/gallery/wishcraft/18.webp", tag: "Community", caption: "Discord community + announcements" },
+    ],
   },
 
   {
@@ -133,7 +186,10 @@ export const PROJECTS = [
       caseStudy: "[Case Study]",
       readme: "[Readme]"
     },
-    screenshot: "./assets/screenshots/petmatch.png"
+    screenshot: "./assets/screenshots/petmatch.png",
+    gallery: [
+      { type: "image", src: "./assets/gallery/petmatch/01.webp", tag: "UI",  caption: "Swipe-based discovery" },
+    ],
   }
 ];
 

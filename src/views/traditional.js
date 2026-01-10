@@ -135,23 +135,6 @@ function skillGroup(label, items) {
 export function mountTraditional(container) {
   const wrap = document.createElement("div");
   wrap.className = "container";
-
-  // HERO
-  const header = document.createElement("section");
-  header.className = "card hero";
-  header.innerHTML = `
-    <h1 class="h1">${PROFILE.name}</h1>
-
-    <div class="pills">
-      <span class="pill">${PROFILE.titlePrimary}</span>
-      <span class="pill">${PROFILE.location}</span>
-      <span class="pill">${PROFILE.education}</span>
-    </div>
-
-    <p class="heroIntro">${PROFILE.shortIntro}</p>
-  `;
-  wrap.appendChild(header);
-
   // ABOUT
   const about = document.createElement("section");
   about.className = "card section section--about";

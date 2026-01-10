@@ -2650,3 +2650,34 @@ body.themeContact .navlinks a.active{
   background: rgba(0,0,0,0.06);
   color: rgba(0,0,0,0.92);
 }
+
+/* Repo button next to project title */
+.projectTitleRow{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.repoBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+}
+
+.repoBtn:hover{
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.20);
+}

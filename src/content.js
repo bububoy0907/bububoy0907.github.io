@@ -29,7 +29,7 @@ export const PROJECTS = [
     name: "PolyU-GO!",
     period: "Sep – Nov 2024",
     oneLiner: "Pokémon GO–style WebAR scavenger hunt for PolyU COMP Info Day",
-    responsibilities: 
+    responsibilities: [
       "Implemented the AR experience and location-based gameplay logic end-to-end under a tight ~3–4 week timeline.",
       "Translated Figma UI designs into production UI, ensuring visual and interaction fidelity.",
       "Produced key 3D assets (full PolyU 3D campus model) used in the AR pipeline.",
@@ -41,7 +41,7 @@ export const PROJECTS = [
       repo: "[Repo Link]",
       demo: "[Demo Video Coming Soon]",
       caseStudy: "[Case Study]",
-      readme: "[Readme"
+      readme: "[Readme]"
     },
     screenshot: "./assets/screenshots/webar.png",
     gallery: [

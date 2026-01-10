@@ -1109,10 +1109,10 @@ body[data-page="home"] #main{
   border-radius: 999px;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(255, 255, 255); /* before op: 0.08*/
   color: rgba(255,255,255,0.94);
 
-  /* KEY FIX: do NOT center the inner stack vertically */
+
   display: inline-block;
   position: relative;
   overflow: hidden;
@@ -1305,8 +1305,8 @@ body[data-page="home"] #main{
 .hsSummaryIcon{
   width: 28px;
   height: 28px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.14);
+  border: 0;
+  border-radius: 0;
   position: relative;
   flex: 0 0 auto;
 }
@@ -1405,7 +1405,7 @@ details[open] .hsSummaryIcon::after{
 .hsSlideMedia{
   border-radius: 14px;
   overflow:hidden;
-  aspect-ratio: 16 / 9; /* makes mixed image sizes look aligned */
+  aspect-ratio: 4 / 3; /* makes mixed image sizes look aligned */
   background: rgba(0,0,0,0.06);
   position: relative;
 }
@@ -1524,7 +1524,6 @@ body[data-page="home"] .hsCtaGroupWide{
   justify-content: center;
 }
 
-/* Optional: keep the group panel from stretching too wide on large screens */
 body[data-page="home"] .hsCtaGroupWide{
   width: min(720px, 92vw);
 }
@@ -1541,7 +1540,6 @@ body[data-page="home"] .topbar{
   box-shadow: none !important;
 }
 
-/* If your header has an inner container that adds blur/tint, kill it too */
 body[data-page="home"] .topbar *{
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -1606,4 +1604,881 @@ button,
   font-weight: 300;
   text-transform: uppercase;
   letter-spacing: -0.02em;
+}
+
+/* ===== Footer icon links ===== */
+.homeFooterInner{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+}
+
+.footerItem{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 12px;
+  border-radius: 14px;
+
+  text-decoration: none;
+  color: rgba(255,255,255,0.92);
+
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.05);
+}
+
+.footerItem:hover{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.footerIcon{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+}
+
+.footerText{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.footerLabel{
+  color: rgba(255,255,255,0.65);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footerValue{
+  color: rgba(255,255,255,0.92);
+  font-size: 14px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+@media (max-width: 760px){
+  .homeFooterInner{ grid-template-columns: 1fr; }
+}
+
+/* ===== Recruiters: icon marquee (fade edges + no border) ===== */
+.hsMarquee--icons{
+  margin-top: 18px;
+  border: 0;                 /* hide the sliding bar border */
+  background: transparent;
+  border-radius: 0;
+
+  /* Fade-in right / fade-out left */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
+}
+
+.hsMarqueeTrack--icons{
+  padding: 10px 0;           /* slimmer than text marquee */
+  gap: 14px;
+  animation-duration: 22s;   /* slightly slower feels more premium */
+}
+
+.hsLogo--icon{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  /* keep items subtle */
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(0,0,0,0.02);
+
+  white-space: nowrap;
+}
+
+.hsLogoIcon{
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+.hsLogoText{
+  font-size: 17px;
+  color: rgba(0,0,0,0.78);
+}
+
+@media (max-width: 520px){
+  .hsLogoText{ display:none; }
+  .hsLogo--icon{ padding: 10px; }
+}
+
+.hsLogo--icon{ border:0; background: transparent; }
+
+/* =========================
+   Recruiters: KPI / Proof points
+   ========================= */
+
+.kpiSection{
+  margin-top: 18px;
+}
+
+.kpiGrid--recruiters{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+/* Per-card tones (RGB triplets) */
+.kpiCard[data-tone="1"]{ --tone: 124 92 255; }  /* purple */
+.kpiCard[data-tone="2"]{ --tone: 0 212 255; }   /* cyan */
+.kpiCard[data-tone="3"]{ --tone: 52 211 153; }  /* green */
+.kpiCard[data-tone="4"]{ --tone: 251 146 60; }  /* orange */
+.kpiCard[data-tone="5"]{ --tone: 236 72 153; }  /* pink */
+.kpiCard[data-tone="6"]{ --tone: 99 102 241; }  /* indigo */
+
+.kpiCard{
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+
+  /* Soft colorful gradient background */
+  background: linear-gradient(
+    135deg,
+    rgb(var(--tone) / 0.18),
+    rgb(var(--tone) / 0.05)
+  );
+
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+
+  transition: transform 160ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+/* Color accent strip */
+.kpiCard::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 4px;
+  background: rgb(var(--tone) / 0.95);
+}
+
+/* Subtle glow blob */
+.kpiCard::after{
+  content:"";
+  position:absolute;
+  inset: -40px -60px auto auto;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgb(var(--tone) / 0.22), transparent 60%);
+  pointer-events:none;
+}
+
+.kpiCard:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.09);
+  border-color: rgb(var(--tone) / 0.22);
+}
+
+.kpiValue{
+  position: relative;
+  z-index: 1;
+
+  font-size: 24px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: rgba(0,0,0,0.92);
+  line-height: 1.1;
+}
+
+.kpiLabel{
+  position: relative;
+  z-index: 1;
+
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(0,0,0,0.66);
+
+  /* IMPORTANT: no ALL CAPS */
+  text-transform: none;
+  letter-spacing: 0;
+
+  /* Use normal UI font for readability */
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+body[data-page="forRecruiters"] #main{
+  padding-top: 0;
+}
+.forRecruiters .hero{
+  margin-top: -84px;
+}
+
+/* Recruiters page: make labels less "shouty" (no ALL CAPS) */
+.forRecruiters .hsAccLabel{
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 650;
+  color: rgba(0,0,0,0.60);
+}
+.forRecruiters .hsAccPeriod{
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+
+
+/* Expanded title shown only when open */
+.hsAccTitle{
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  color: rgba(0,0,0,0.86);
+}
+
+/* Make expanded content feel clickable (matches JS "click-to-collapse") */
+details[open] .hsAccBody{ cursor: pointer; }
+details[open] .hsAccBody a{ cursor: pointer; }
+
+/* Links chips in accordion */
+.hsAccLinks{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.hsLinkChip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.02);
+  color: rgba(0,0,0,0.80);
+  font-size: 12px;
+  text-decoration: none;
+}
+.hsLinkChip:hover{
+  background: rgba(0,0,0,0.06);
+}
+
+.hsAccPanel{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* When open, the row grows from 0fr → 1fr (reveals top → down) */
+details[open] .hsAccPanel{
+  grid-template-rows: 1fr;
+}
+
+/* The direct child must be able to shrink inside grid */
+.hsAccBody{
+  min-height: 0;
+  overflow: hidden; /* critical: clips content while collapsing */
+}
+
+/* Put spacing on the inner, not on the animated container */
+.hsAccBodyInner{
+  padding: 10px 0 18px;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 180ms ease,
+    transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* Fade + slide into place when open */
+details[open] .hsAccBodyInner{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional: slightly softer feeling on the summary itself */
+.hsSummary{
+  transition: background 160ms ease;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .hsAccPanel,
+  .hsAccBodyInner{
+    transition: none !important;
+  }
+}
+/* =========================================================
+   Recruiters accordion: smooth slide-down (Hardscope-like)
+   ========================================================= */
+
+/* KEY FIX: override the browser default that uses display:none.
+   Without this, no transition can happen (it will "pop"). */
+.forRecruiters details.hsDetails > :not(summary) {
+  display: block;
+}
+
+/* Animate the panel itself */
+.forRecruiters .hsAccPanel {
+  display: grid;
+  grid-template-rows: 0fr; /* collapsed */
+  transition: grid-template-rows 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.forRecruiters details[open] .hsAccPanel {
+  grid-template-rows: 1fr; /* expanded */
+}
+
+/* The element inside the animated row must allow shrinking */
+.forRecruiters .hsAccBody {
+  min-height: 0;
+  overflow: hidden;
+
+  /* IMPORTANT: your older rule sets padding on .hsAccBody.
+     Padding can “fight” full collapse, so we force it to 0 here. */
+  padding: 0 !important;
+}
+
+/* Put padding on an inner wrapper instead (so collapse can hit 0 cleanly) */
+.forRecruiters .hsAccBodyInner {
+  padding: 10px 0 18px;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 160ms ease,
+    transform 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.forRecruiters details[open] .hsAccBodyInner {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 40ms;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .forRecruiters .hsAccPanel,
+  .forRecruiters .hsAccBodyInner {
+    transition: none !important;
+  }
+}
+
+.hsAccBullets{
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.6;
+}
+
+.hsAccBullets li{
+  margin: 10px 0;          /* spacing between bullets */
+}
+
+@media (max-width: 520px){
+  .hsAccBullets li{ margin: 8px 0; }
+}
+
+.hsAccBullets li{
+  margin: 10px 0;
+  padding-left: 2px;
+}
+
+.hsAccBullets li + li{
+  padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.forRecruiters .hsSummaryTitle{
+  font-family: var(--font-button);   /* Open Runde */
+  font-weight: 600;
+  font-size: 18px;                   /* slightly larger */
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: #111;
+}
+
+.forRecruiters .hsAccTitle{
+  font-family: var(--font-body);     /* Inter for detail title */
+  font-weight: 650;
+  font-size: 15px;                   /* slightly larger than before */
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(0,0,0,0.86);
+  margin-top: 8px;
+}
+
+/* Optional: make the summary row feel a bit more premium */
+.forRecruiters .hsSummary{
+  padding: 14px 0;                   /* a touch more vertical space */
+}
+.forRecruiters .hsAccTitle{ font-family: var(--font-button); }
+
+/* ===== Gallery header: line under title, buttons under line ===== */
+.hsGalleryHead {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.hsGalleryLine {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 10px 0 10px;
+}
+
+#hsGalleryFilter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ===== Gallery: borderless + scrollbar hidden + horizontal scroll enabled ===== */
+#hsGallery {
+  border: none !important;         /* remove border */
+  background: transparent !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+
+  /* Make horizontal scrolling behave nicely on mobile */
+  -webkit-overflow-scrolling: touch;
+
+  /* Hide scrollbar (Firefox/IE) */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#hsGallery::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Ensure the track actually becomes wider than the container */
+#hsGalleryTrack {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  width: max-content;
+}
+
+/* If any ancestor accidentally blocks scroll, this helps */
+.hsSection--white {
+  overflow: visible;
+}
+/* ===== Gallery heading line + filter placement ===== */
+.hsGalleryHead {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.hsGalleryLine {
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: 10px 0 12px;
+}
+
+#hsGalleryFilter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ===== Filter chips styling ===== */
+.hsFilterChip {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.14);
+  background: rgba(0,0,0,0.03);
+  color: rgba(0,0,0,0.78);
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+}
+
+.hsFilterChip:hover {
+  transform: translateY(-1px);
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.22);
+}
+
+.hsFilterChip[aria-pressed="true"] {
+  background: rgba(0,0,0,0.10);
+  border-color: rgba(0,0,0,0.28);
+  color: rgba(0,0,0,0.88);
+}
+
+.hsFilterChip:focus-visible {
+  outline: 2px solid rgba(0,0,0,0.35);
+  outline-offset: 2px;
+}
+
+/* ===== Gallery scrollbar hidden but still scrollable ===== */
+#hsGallery {
+  border: none !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#hsGallery::-webkit-scrollbar { width: 0; height: 0; }
+
+#hsGalleryTrack {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  width: max-content; /* ensures horizontal overflow exists */
+}
+
+/* ===== Gallery: ensure it can actually scroll horizontally ===== */
+#hsGallery {
+  border: none !important;          /* remove border */
+  background: transparent !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+
+  /* hide scrollbar but keep scrolling */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* UX for drag */
+  cursor: grab;
+}
+#hsGallery.isDragging { cursor: grabbing; }
+
+#hsGallery::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Critical: make the track wider than the viewport */
+#hsGalleryTrack {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding: 14px 0;
+}
+
+/* Critical: each slide must not shrink, otherwise everything compresses and no overflow */
+#hsGalleryTrack .hsSlide {
+  flex: 0 0 auto;
+  width: min(520px, 78vw);
+}
+
+/* ===== Gallery title line + filter under it ===== */
+.hsGalleryLine {
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: 10px 0 12px;
+}
+#hsGalleryFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ===== Styled filter chips ===== */
+.hsFilterChip {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.16);
+  background: rgba(0,0,0,0.04);
+  color: rgba(0,0,0,0.80);
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+}
+.hsFilterChip:hover {
+  transform: translateY(-1px);
+  background: rgba(0,0,0,0.07);
+  border-color: rgba(0,0,0,0.24);
+}
+.hsFilterChip[aria-pressed="true"] {
+  background: rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.30);
+  color: rgba(0,0,0,0.92);
+}
+.hsFilterChip:focus-visible {
+  outline: 2px solid rgba(0,0,0,0.35);
+  outline-offset: 2px;
+}
+/* ===== Filter chips: borderless, selected black ===== */
+.hsFilterChip {
+  appearance: none;
+  border: none;
+  background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.78);
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease, color 140ms ease;
+}
+
+.hsFilterChip:hover {
+  transform: translateY(-1px);
+  background: rgba(0,0,0,0.10);
+}
+
+.hsFilterChip[aria-pressed="true"] {
+  background: #000;
+  color: #fff;
+}
+
+.hsFilterChip:focus-visible {
+  outline: 2px solid rgba(0,0,0,0.35);
+  outline-offset: 2px;
+}
+/* ===== Gallery wrap with side fades (“white mist”) ===== */
+.hsGalleryWrap {
+  position: relative;
+}
+
+/* Side fades */
+.hsGalleryWrap::before,
+.hsGalleryWrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hsGalleryWrap::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+
+.hsGalleryWrap::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+
+/* Nav buttons */
+.hsGalleryNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.10);
+  color: rgba(0,0,0,0.85);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 140ms ease, transform 140ms ease, opacity 140ms ease;
+}
+
+.hsGalleryNav:hover {
+  background: rgba(0,0,0,0.16);
+  transform: translateY(-50%) scale(1.03);
+}
+
+.hsGalleryNav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.hsGalleryNav--left { left: 10px; }
+.hsGalleryNav--right { right: 10px; }
+
+/* Ensure gallery is scrollable and not boxed */
+#hsGallery {
+  border: none !important;
+  background: transparent !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+  z-index: 1;
+}
+
+#hsGallery::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Make sure the track causes overflow */
+#hsGalleryTrack {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding: 14px 56px; /* padding to avoid content under mist + buttons */
+}
+
+/* Prevent slides from shrinking */
+#hsGalleryTrack .hsSlide {
+  flex: 0 0 auto;
+  width: min(520px, 78vw);
+}
+
+/* Prevent image dragging / selection */
+.hsSlideImg,
+.hsSlideVideo {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* Fixed-size media frame; do NOT crop */
+.hsSlideMedia {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;           /* keeps gallery size consistent */
+  background: rgba(0,0,0,0.04);   /* subtle “matte” behind letterboxing */
+  display: grid;
+  place-items: center;
+}
+
+/* Full image visible */
+.hsSlideMedia img.hsSlideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;            /* key change */
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Full video visible (same principle) */
+.hsSlideMedia video.hsSlideVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+#hsGalleryTrack {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding: 14px 56px;
+}
+
+#hsGalleryTrack .hsSlide {
+  flex: 0 0 auto;
+  width: min(520px, 78vw);
+}
+#hsGallery,
+#hsGalleryTrack,
+#hsGalleryTrack .hsSlide,
+#hsGalleryTrack .hsSlide * {
+  cursor: default !important;
+}
+
+/* Keep nav buttons clickable */
+.hsGalleryNav { cursor: pointer !important; }
+
+/* Fixed-size frame, but show FULL media (no crop) */
+#hsGalleryTrack .hsSlide .hsSlideMedia {
+  aspect-ratio: 16 / 9;              /* consistent gallery size */
+  background: rgba(0,0,0,0.04);      /* matte behind letterbox */
+  overflow: hidden;
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+}
+
+/* Force FULL visibility */
+#hsGalleryTrack .hsSlide .hsSlideMedia > img.hsSlideImg,
+#hsGalleryTrack .hsSlide .hsSlideMedia > video.hsSlideVideo {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;     /* key: NO crop */
+  object-position: center center !important;
+
+  transform: none !important;         /* cancels any pan/scale */
+  max-width: 100% !important;
+  max-height: 100% !important;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ===== Gallery media: fixed frame, but ALWAYS show full image/video (shrink-to-fit) ===== */
+#hsGalleryTrack .hsSlide .hsSlideMedia {
+  aspect-ratio: 16 / 9;            /* keeps gallery size consistent */
+  background: rgba(0,0,0,0.04);    /* matte behind letterbox */
+  border-radius: 14px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Images: shrink within the rectangle (no crop) */
+#hsGalleryTrack .hsSlide .hsSlideMedia > img.hsSlideImg {
+  /* cancel common crop rules */
+  object-fit: unset !important;
+  object-position: center center !important;
+
+  /* cancel positioning rules that can cause clipping */
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+
+  /* key: let it size naturally, but constrain to the frame */
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Videos: same shrink-to-fit behavior */
+#hsGalleryTrack .hsSlide .hsSlideMedia > video.hsSlideVideo {
+  object-fit: unset !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }

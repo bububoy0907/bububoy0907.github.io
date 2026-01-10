@@ -6,6 +6,16 @@ function safeUrl(raw) {
   if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
   return `https://${raw}`;
 }
+const PROJECT_REPOS = {
+  webar: "https://github.com/bububoy0907/PolyU-GO",
+  capstone: "https://github.com/bububoy0907/Capstone-driving-sims-HK",
+  petmatch: "https://github.com/bububoy0907/pet-match",
+};
+
+function getRepoUrl(projectId) {
+  const url = PROJECT_REPOS[projectId];
+  return url ? safeUrl(url) : null;
+}
 
 function linkChip(text) {
   const a = document.createElement("a");
@@ -35,10 +45,14 @@ function pill(text) {
 function projectCard(p) {
   const el = document.createElement("article");
   el.className = "projectCard";
+  const repoUrl = getRepoUrl(p.id);
 
   el.innerHTML = `
     <div class="projectHead">
-      <h3 class="projectTitle">${p.name}</h3>
+      <div class="projectTitleRow">
+        <h3 class="projectTitle">${p.name}</h3>
+        ${repoUrl ? `<a class="repoBtn" href="${repoUrl}" target="_blank" rel="noreferrer">[Repo]</a>` : ``}
+      </div>
       <span class="projectPeriod">${p.period ?? ""}</span>
     </div>
 

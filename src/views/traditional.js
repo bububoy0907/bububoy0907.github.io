@@ -51,7 +51,7 @@ function projectCard(p) {
     <div class="projectHead">
       <div class="projectTitleRow">
         <h3 class="projectTitle">${p.name}</h3>
-        ${repoUrl ? `<a class="repoBtn" href="${repoUrl}" target="_blank" rel="noreferrer">[Repo]</a>` : ``}
+        ${repoUrl ? `<a class="repoBtn" href="${repoUrl}" target="_blank" rel="noreferrer" style="text-decoration: underline;">[Repo link]</a>` : ``}
       </div>
       <span class="projectPeriod">${p.period ?? ""}</span>
     </div>
@@ -76,16 +76,6 @@ function projectCard(p) {
 
 
   `;
-  /*^^^
-    <div class="linksRow" aria-label="Project links">
-      <span class="linksLabel">Links</span>
-      <div class="linkChips"></div>
-    </div>
-  */
-  // Build thumbnail with JS so we can:
-  // - show full image (contain)
-  // - detect portrait vs landscape
-  // - handle missing image gracefully
   const thumb = document.createElement("div");
   thumb.className = "thumb";
 
@@ -96,7 +86,7 @@ function projectCard(p) {
   img.decoding = "async";
 
   img.addEventListener("load", () => {
-    // Portrait detection: taller than it is wide (with some tolerance)
+    
     const ratio = img.naturalHeight / Math.max(1, img.naturalWidth);
     const isPortrait = ratio > 1.15;
     thumb.classList.toggle("thumb--portrait", isPortrait);
@@ -107,7 +97,6 @@ function projectCard(p) {
     thumb.textContent = "[Screenshot Placeholder]";
   }, { once: true });
 
-  // Optional: open screenshot in a new tab for full-size view
   img.addEventListener("click", () => {
     window.open(img.src, "_blank", "noopener,noreferrer");
   });
@@ -154,12 +143,13 @@ export function mountTraditional(container) {
   about.className = "card section section--about";
   about.id = "about";
   about.innerHTML = `
-    <h2>About</h2>
+    <h2>Summary</h2>
     <p>
-      I am a BSc in Computing graduate from The Hong Kong Polytechnic University (Second-Class Honours, May 2025).
-      I enjoy taking ideas from concept to a working product with clear engineering discipline—prioritizing correctness,
-      performance, maintainability, and documentation. My experience spans modern web (TypeScript/JavaScript),
-      real-time 3D/simulation (Unity/C#), and operational thinking shaped by running live services with meaningful user concurrency.
+      I am a BSc in Computing graduate from The Hong Kong Polytechnic University (Second-Class Honours, May 2025). 
+      I have built interactive web and Unity projects, including a WebAR scavenger hunt, a driving simulator, and a live online game service. 
+      My main technical background includes TypeScript/JavaScript, C#, Java, SQL, Unity, Git, Docker, and Linux. 
+      I am looking for early-career software engineering opportunities where I can contribute through implementation, debugging, and reliable delivery, 
+      and I am also open to application support, QA/UAT, and SQL-focused roles.
     </p>
   `;
   wrap.appendChild(about);

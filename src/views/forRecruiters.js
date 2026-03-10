@@ -573,9 +573,9 @@ export function mountForRecruiters(container) {
           <h2 class="hsH2">About Me</h2>
           <div class="hsRule"></div>
         </div>
-        <p>HK PolyU BSc Computing graduate who is passionate about software development / coding </p>
-        <p>Experienced in TypeScript/JavaScript web development, Unity/C#, and operating live services</p>
-        <p>Actively looking for software engineer position</p>
+          <p>HK PolyU BSc Computing graduate with hands-on experience building interactive systems, web applications, and production-facing software.</p>
+          <p>Skilled in TypeScript/JavaScript, Unity/C#, SQL, debugging, and live-service operations, with experience across web, simulation, and technical problem-solving.</p>
+          <p>Actively seeking early-career Software Engineer roles, and also open to Application Support, QA/UAT, and SQL-focused opportunities where I can apply my troubleshooting mindset and grow in a structured team.</p>
       </div>
     </section>
     <section class="hsSection hsSection--white">

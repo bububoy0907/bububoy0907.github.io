@@ -574,8 +574,8 @@ export function mountForRecruiters(container) {
           <div class="hsRule"></div>
         </div>
           <p>HK PolyU BSc Computing graduate with hands-on experience building interactive systems, web applications, and production-facing software.</p>
-          <p>Skilled in TypeScript/JavaScript, Unity/C#, SQL, debugging, and live-service operations, with experience across web, simulation, and technical problem-solving.</p>
-          <p>Actively seeking early-career Software Engineer roles, and also open to Application Support, QA/UAT, and SQL-focused opportunities where I can apply my troubleshooting mindset and grow in a structured team.</p>
+          <p>Skilled in Modern Programming Languages(Python/Java/C#), Unity, SQL, debugging, and live-service operations, web development, and technical problem-solving.</p>
+          <p>Actively seeking early-career Software Engineer roles, and also open to Application Support, QA/UAT, and SQL-focused opportunities where I can contribute to the IT industry and grow in a structured team.</p>
       </div>
     </section>
     <section class="hsSection hsSection--white">

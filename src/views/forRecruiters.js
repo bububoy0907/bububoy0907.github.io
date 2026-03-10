@@ -414,6 +414,28 @@ function renderGallerySlide(it) {
     </figure>
   `;
 }
+
+function getCurrentGalleryImageItems(root) {
+  const slides = Array.from(root.querySelectorAll("#hsGalleryTrack .hsSlide"));
+  return slides
+    .map((slide) => {
+      const img = slide.querySelector(".hsSlideImg");
+      if (!img) return null;
+
+      const tags = Array.from(slide.querySelectorAll(".hsSlideTag")).map((el) => el.textContent.trim());
+      const caption = slide.querySelector(".hsSlideCaption")?.textContent?.trim() || "";
+      const alt = img.getAttribute("alt") || caption || "Gallery image";
+
+      return {
+        src: img.getAttribute("src"),
+        alt,
+        caption,
+        tags
+      };
+    })
+    .filter(Boolean);
+}
+
 function setupGalleryDragScroll(galleryEl) {
   if (!galleryEl) return () => {};
 
@@ -517,6 +539,136 @@ function setupGalleryUI(root) {
 
   return () => {
     filter.removeEventListener("click", onClick);
+  };
+}
+
+function setupGalleryLightbox(root) {
+  const track = root.querySelector("#hsGalleryTrack");
+  const lightbox = root.querySelector("#hsLightbox");
+  const backdrop = root.querySelector("#hsLightboxBackdrop");
+  const closeBtn = root.querySelector("#hsLightboxClose");
+  const prevBtn = root.querySelector("#hsLightboxPrev");
+  const nextBtn = root.querySelector("#hsLightboxNext");
+  const imgEl = root.querySelector("#hsLightboxImg");
+  const captionEl = root.querySelector("#hsLightboxCaption");
+  const tagsEl = root.querySelector("#hsLightboxTags");
+
+  if (!track || !lightbox || !imgEl || !captionEl || !tagsEl) return () => {};
+
+  let items = [];
+  let currentIndex = 0;
+
+  const syncItems = () => {
+    items = getCurrentGalleryImageItems(root);
+  };
+
+  const renderTags = (tags) => {
+    tagsEl.innerHTML = (tags || [])
+      .map((tag, idx) => {
+        const cls = idx === 0 ? "hsLightboxTag hsLightboxTag--project" : "hsLightboxTag hsLightboxTag--item";
+        return `<span class="${cls}">${escapeHtml(tag)}</span>`;
+      })
+      .join("");
+  };
+
+  const renderCurrent = () => {
+    if (!items.length) return;
+
+    const item = items[currentIndex];
+    imgEl.src = item.src;
+    imgEl.alt = item.alt || "Gallery image";
+    captionEl.textContent = item.caption || "";
+    renderTags(item.tags || []);
+  };
+
+  const openAt = (index) => {
+    syncItems();
+    if (!items.length) return;
+
+    currentIndex = ((index % items.length) + items.length) % items.length;
+    renderCurrent();
+
+    lightbox.classList.add("isOpen");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("hsLightboxOpen");
+  };
+
+  const close = () => {
+    lightbox.classList.remove("isOpen");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("hsLightboxOpen");
+  };
+
+  const goPrev = (e) => {
+    if (e) e.stopPropagation();
+    if (!items.length) return;
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    renderCurrent();
+  };
+
+  const goNext = (e) => {
+    if (e) e.stopPropagation();
+    if (!items.length) return;
+    currentIndex = (currentIndex + 1) % items.length;
+    renderCurrent();
+  };
+
+  const onTrackClick = (e) => {
+    const clickedImg = e.target.closest(".hsSlideImg");
+    if (!clickedImg) return;
+
+    syncItems();
+
+    const imgs = Array.from(root.querySelectorAll("#hsGalleryTrack .hsSlideImg"));
+    const index = imgs.indexOf(clickedImg);
+    if (index === -1) return;
+
+    openAt(index);
+  };
+
+  const onKeyDown = (e) => {
+    if (!lightbox.classList.contains("isOpen")) return;
+
+    if (e.key === "Escape") {
+      close();
+    } else if (e.key === "ArrowLeft") {
+      goPrev();
+    } else if (e.key === "ArrowRight") {
+      goNext();
+    }
+  };
+
+  const onBackdropClick = () => close();
+  const onCloseClick = (e) => {
+    e.stopPropagation();
+    close();
+  };
+
+  track.addEventListener("click", onTrackClick);
+  backdrop?.addEventListener("click", onBackdropClick);
+  closeBtn?.addEventListener("click", onCloseClick);
+  prevBtn?.addEventListener("click", goPrev);
+  nextBtn?.addEventListener("click", goNext);
+  document.addEventListener("keydown", onKeyDown);
+
+  // If the gallery is rebuilt by filters while the lightbox is open, refresh the item list
+  const mo = new MutationObserver(() => {
+    syncItems();
+    if (lightbox.classList.contains("isOpen")) {
+      if (currentIndex >= items.length) currentIndex = 0;
+      renderCurrent();
+    }
+  });
+  mo.observe(track, { childList: true, subtree: true });
+
+  return () => {
+    track.removeEventListener("click", onTrackClick);
+    backdrop?.removeEventListener("click", onBackdropClick);
+    closeBtn?.removeEventListener("click", onCloseClick);
+    prevBtn?.removeEventListener("click", goPrev);
+    nextBtn?.removeEventListener("click", goNext);
+    document.removeEventListener("keydown", onKeyDown);
+    mo.disconnect();
   };
 }
 
@@ -624,6 +776,31 @@ export function mountForRecruiters(container) {
         </div>
       </div>
     </section>
+
+    <div class="hsLightbox" id="hsLightbox" aria-hidden="true">
+      <div class="hsLightboxBackdrop" id="hsLightboxBackdrop"></div>
+
+      <button class="hsLightboxClose" id="hsLightboxClose" type="button" aria-label="Close image viewer">
+        &times;
+      </button>
+
+      <button class="hsLightboxNav hsLightboxNav--left" id="hsLightboxPrev" type="button" aria-label="Previous image">
+        &#x2039;
+      </button>
+
+      <div class="hsLightboxContent" id="hsLightboxContent">
+        <img class="hsLightboxImg" id="hsLightboxImg" src="" alt="" />
+        <div class="hsLightboxMeta">
+          <div class="hsLightboxTags" id="hsLightboxTags"></div>
+          <div class="hsLightboxCaption" id="hsLightboxCaption"></div>
+        </div>
+      </div>
+
+      <button class="hsLightboxNav hsLightboxNav--right" id="hsLightboxNext" type="button" aria-label="Next image">
+        &#x203A;
+      </button>
+    </div>
+
     <footer class="homeFooter">
       <div class="container homeFooterInner">
         <a class="footerItem" href="mailto:${PROFILE.contact.email}" aria-label="Email">
@@ -678,15 +855,17 @@ export function mountForRecruiters(container) {
 
   container.appendChild(wrap);
 
-const cleanupReveal = setupReveal(wrap);
-const cleanupGalleryUI = setupGalleryUI(wrap);
-const cleanupGalleryNav = setupGalleryNav(wrap);
-const galleryEl = wrap.querySelector("#hsGallery");
+    const cleanupReveal = setupReveal(wrap);
+    const cleanupGalleryUI = setupGalleryUI(wrap);
+    const cleanupGalleryNav = setupGalleryNav(wrap);
+    const cleanupGalleryLightbox = setupGalleryLightbox(wrap);
+    const galleryEl = wrap.querySelector("#hsGallery");
 
     return () => {
       cleanupReveal?.();
       cleanupGalleryUI?.();
       cleanupGalleryNav?.();
+      cleanupGalleryLightbox?.();
       container.innerHTML = "";
     };
 }

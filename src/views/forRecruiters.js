@@ -39,17 +39,17 @@ const KPI_ITEMS = [
 const RECRUITER_PROJECT_META = {
   webar: {
     shortName: "PolyU-GO!",
-    detailTitle: "WebAR Application for PolyU COMP Info Day",
+    detailTitle: "Pokémon GO–style WebAR Scavenger Hunt for PolyU COMP Info Day",
     bullets: [
-      "Shipped an end-to-end AR, geofencing experience under a ~4-week sprint",
-      "Designed the full PolyU campus 3D model.",
-      "Developed core gameplay, UI flow and deployment for an event build.",
-      "Handled live event load: 2,000+ concurrent users and ~90% positive feedback.",
+      "Delivered a Pokémon GO–style WebAR experience under a fixed event deadline by integrating 8th Wall with gameplay flow and UI.",
+      "Built a low-poly PolyU campus asset pipeline from Blender to WebGL and simplified scene complexity for mobile performance.",
+      "Worked directly with PolyU’s marketing team to refine requirements and iterate on content/UX throughout development.",
+      "Supported 2,000+ concurrent users during live usage and received ~90% positive feedback."
     ],
   },
   unity: {
     shortName: "Hong Kong Driving Simulator",
-    detailTitle: "Hong Kong based Driving Simulator ",
+    detailTitle: "1:1 Geospatial 3D Replica of a Hong Kong-based Driving Simulator in Unity",
     bullets: [
       "Built a 1:1 geospatial 3D replica of the Happy Valley and Chung Yee Street driving-test route in Unity",
       "Implemented 70+ traffic-rule checks and reporting/logging style logic.",
@@ -60,20 +60,20 @@ const RECRUITER_PROJECT_META = {
   },
   wishcraft: {
     shortName: "Minecraft Server - BladeCyber",
-    detailTitle: "Live MMORPG in Minecraft (7,000 regs; ~150 CCU)",
+    detailTitle: "Live MMORPG Multiplayer Experience on Minecraft",
     bullets: [
-      "Operated a live MMORPG across Hong Kong/Macau/Taiwan",
-      "Achieved 7,000 unique registrations and steady ~150 concurrent players.",
+      "Operated a live online game service across Hong Kong/Macau/Taiwan",
+      "Achieved 7,000 unique registrations and ~150 concurrent players on average.",
       "Implemented scaling/routing + production debugging; tuned configs for reliability under peak load.",
       "Built and moderated a 1,000+ Discord community for announcements and player support.",
     ],
   },
   petmatch: {
     shortName: "PetMatch",
-    detailTitle: "A Swipe-based Web Application as Pet Distribution Platform",
+    detailTitle: "A Swipe-based Pet Distribution Platform",
     bullets: [
-      "Built the full-stack web application",
-      "Designed the database model",
+      "Built the full-stack web application (client <-> server + database)",
+      "Designed the database model with MongoDB",
       "Implemented the Node.js backend API, and delivered the React client UI.",
       "Implemented swipe-based browsing, matchmaking flows, and data persistence across the database, server, and client layers.",
       "Set up a Dockerized development environment and basic CI workflow to streamline onboarding and iterative delivery within a 2-week sprint.",

@@ -3,12 +3,12 @@
 export const PROFILE = {
   name: "Wong Tsz Yeung Jason (Jason Wong)",
   location: "Hong Kong SAR",
-  titlePrimary: "Junior/Graduate Software Engineer",
-  titleSecondary: "Junior Sysadmin / DevOps (secondary)",
+  titlePrimary: "Software Engineer",
+  titleSecondary: "Open to Application Support / QA / SQL-focused roles",
   education:
-    "BSc (Hons) in Computing , The Hong Kong Polytechnic University — Second-Class Honours (May 2025).",
+    "BSc (Hons) in Computing, The Hong Kong Polytechnic University — Second-Class Honours.",
   shortIntro:
-    "I make Games • Web Application • VR/AR • and more",
+    "I make Games • Applications • algorithmic • and more",
   contact: {
     email: "Wongbu0195@gmail.com",
     linkedin: "linkedin.com/in/jasonbubu",
@@ -30,11 +30,10 @@ export const PROJECTS = [
     period: "Sep – Nov 2024",
     oneLiner: "Pokémon GO–style WebAR scavenger hunt for PolyU COMP Info Day",
     responsibilities: [
-      "Implemented the AR experience and location-based gameplay logic end-to-end under a tight ~3–4 week timeline.",
-      "Translated Figma UI designs into production UI, ensuring visual and interaction fidelity.",
-      "Produced key 3D assets (full PolyU 3D campus model) used in the AR pipeline.",
-      "Supported 2,000+ concurrent users with stable performance during live usage.",
-      "Achieved ~90% positive feedback from visitors, students, and faculty."
+      "Delivered a Pokémon GO–style WebAR experience under a fixed event deadline by integrating 8th Wall with gameplay flow and UI.",
+      "Built a low-poly PolyU campus asset pipeline from Blender to WebGL and simplified scene complexity for mobile performance.",
+      "Worked directly with PolyU’s marketing team to refine requirements and iterate on content/UX throughout development.",
+      "Supported 2,000+ concurrent users during live usage and received ~90% positive feedback."
     ],
     tech: ["Three.js", "TypeScript", "WebGL", "Firebase", "SQL", "8th Wall", "Figma", "3D modelling"],
     links: {
@@ -300,7 +299,7 @@ export const RESEARCH = [
 // NEW: Looking for section
 export const LOOKING_FOR = {
   text:
-    "I’m targeting Graduate/Junior Software Engineer roles (frontend/full-stack/platform) where performance, reliability, and clean delivery matter. I’m also open to System Admin / Junior DevOps roles where I can apply my operations mindset (scaling, troubleshooting, automation, documentation)."
+    "I’m targeting early-career Software Engineer roles where debugging, reliability, and clean delivery matter. I’m also open to Application Support, QA/UAT, and SQL-focused roles where I can apply my troubleshooting mindset, production support experience, and structured testing approach."
 };
 
 // Update navigation if you use ELEVATOR_FLOORS for a sidebar/scroll UI

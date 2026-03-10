@@ -8,7 +8,7 @@ export const PROFILE = {
   education:
     "BSc (Hons) in Computing, The Hong Kong Polytechnic University — Second-Class Honours.",
   shortIntro:
-    "I make Games • Applications • algorithmic • and more",
+    "I make Games • Applications • Systems • Experiences",
   contact: {
     email: "Wongbu0195@gmail.com",
     linkedin: "linkedin.com/in/jasonbubu",
